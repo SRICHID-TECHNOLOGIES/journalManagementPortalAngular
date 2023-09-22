@@ -1,0 +1,43 @@
+<!-- <div class="header">
+    <img src="assets/logoo.png " alt="logo"  style="width:5%;text-align: left; ">
+    <h1>Journal Management Portal</h1>
+</div> -->
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="col-md-2">
+        <img src="assets/logoo.png " alt="logo" style="width:70%;text-align: left; ">
+        <div style="text-align: left;">&nbsp;&nbsp;IWWA JOURNAL</div>
+      </div>
+      <div class="col-md-7" style="padding-left: 40%;margin-top: -79px;">
+        <h1>JOURNAL MANAGEMENT PORTAL</h1>
+      </div>
+    </div>
+  
+  </div>
+  
+  <nav>
+    <div style="text-align: center;">
+      <ul>
+  
+        <!-- <li><a [routerLink]="['/journalcomponent']">Home</a></li> -->
+        <li><a href="#">About</a></li>
+        <li><a [routerLink]="['/manuscriptsubmission']">Submit Manuscript</a></li>
+        <li><a href="#">Review Submissions</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a [routerLink]="['/register']">Register</a></li>
+        <li>
+            <button type="button" class="btn btn-clear dropdown-toggle" data-toggle="dropdown" style="color: white;">
+              Masters
+            </button>
+            <div class="dropdown-menu">
+              <a style="color: black;" class="dropdown-item" [routerLink]="['/subjectcontent']">Subject Content</a>
+              <a style="color: black;" class="dropdown-item" [routerLink]="['/typeOfContentMaster']">Type of Manuscript Content</a>
+              <!-- <a class="dropdown-item" href="#">Link 3</a> -->
+            </div>
+        </li>
+        <input [routerLink]="['/login']" type="submit" value="Login"> <!-- This is the login button -->
+  
+      </ul>
+    </div>
+  </nav><br> <br>

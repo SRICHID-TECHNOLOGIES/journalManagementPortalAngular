@@ -1,0 +1,40 @@
+<br>
+<h1 style="text-align: center;">Subject Content</h1>
+
+<br>
+<form>
+    <div class="col-md-12 row">
+        <div class="col-md-4 row"></div>
+        <div class="col-md-5 row">
+            <label><b>Enter the Subject Content:</b></label><br>
+            <textarea type="text" class="form-control" name="subjectcontent" [(ngModel)]="subjectcontent"  placeholder="please enter here"></textarea>
+           
+            <br><br>
+        </div>
+    </div>
+    <div class="col-md-12 row">
+        <div class="col-md-6 row"></div>
+        <div class="col-md-5 row">
+    <button *ngIf = "save" class="btn btn-primary" (click)="savesubjectcontent()">save</button> &nbsp; 
+    <button *ngIf = "edit" class="btn" style="background-color: rgb(219, 59, 0);" (click)="Editsubjectcontent()">Edit</button>  
+        </div>
+    </div>
+    <br>
+</form>
+    <table class="table container">
+        <tr>
+            <th>Sl No.</th>
+            <th>Subject Name</th>
+            <th>Created On</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        <tr *ngFor="let subjectcontent of subjectcontentList;index as i">
+            <td>{{i+1}}</td>
+            <td>{{subjectcontent.subjectName}}</td>
+            <td>{{subjectcontent.createdOn}}</td>
+            <td><button class="btn btn-primary" (click)="updateRow(subjectcontent)">Edit</button></td>
+            <td><button class="btn btn-danger" (click)="Deletesubjectcontent(subjectcontent.subjectID)">Delete</button></td>
+        </tr>
+</table>

@@ -1,0 +1,190 @@
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #89c0ee;
+}
+
+
+
+
+.content {
+    border-radius: 1;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fdfdf8;
+    color:rgb(31, 11, 11);
+
+}
+
+
+
+
+
+
+
+.services .icon-box {
+   
+
+    padding: 50px 20px;
+    margin-top: 35px;
+    margin-bottom: 25px;
+    text-align: center;
+    height: 200px; 
+     position: relative;
+    background: #fff;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1); 
+
+}
+.contact
+{
+    
+   
+   color: rgb(1, 1, 16);
+}
+
+.contactdetails
+{
+    
+   
+   color: #007bff;
+}
+.about section-bg
+{
+    
+   
+    color: rgb(17, 17, 227);
+ }
+
+.sectiontitle
+{
+    color: rgb(1, 1, 16); 
+}
+
+.image-container {
+    display: flex; /* Use flexbox for horizontal alignment */
+    justify-content: space-between; /* Distribute space evenly between images */
+}
+
+
+.services .icon-box {
+    display: inline-block; 
+    margin-right: 10px; /* Add spacing between text boxes */
+  } 
+
+  
+
+  .faq-dropdown {
+    display: none; /* Initially hide dropdown content */
+  }
+
+  /* Style for the FAQ questions (can be links or buttons) */
+  .faq-question {
+    cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+  }
+
+  /* Style for the FAQ answers */
+  .faq-answer {
+    display: none; /* Initially hide answers */
+  }
+
+  /* Show answer when FAQ question is clicked */
+  .faq-question.active + .faq-dropdown {
+    display: block;
+  }
+
+
+  .faq-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.faq-question {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f7f7f7;
+    position: relative;
+}
+
+.faq-answer {
+    display: none;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* CSS for the dropdown arrow icon */
+.faq-question::after {
+    content: "▼";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14px;
+}
+a
+{
+    color: #117eeb;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+
+a:link {
+    color: #117eeb;
+    text-decoration: none;
+}
+
+
+
+  /* Create three equal columns that floats next to each other */
+ 
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  /* Float four columns side by side */
+  .column {
+    float: left;
+    width: 50%;
+    padding: 0 10px;
+  }
+  
+  /* Remove extra left and right margins, due to padding */
+  .row {margin: 0 -5px;}
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Responsive columns */
+  @media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
+  
+  /* Style the counter cards */
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    text-align: center;
+    background-color: #eef2f5;
+  }
