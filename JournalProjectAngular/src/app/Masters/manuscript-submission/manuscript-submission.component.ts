@@ -38,7 +38,7 @@ export class ManuscriptSubmissionComponent {
 
   getmanuscriptid() {
     this.Services.FetchManuscriptNumber().subscribe((result: any) => {
-      this.tableLength;
+      this.tableLength=0;
       this.tableLength = (this.tableLength + 1).toString().padStart(3, '0');
       const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
       this.currentMonth = monthNames[new Date().getMonth()];
@@ -94,7 +94,7 @@ this.selectedSubjectContent = parseInt(data.target.value)
     const frmData = new FormData();
     frmData.append('FileBlobLink', this.docs);
     frmData.append('UndertakingFileBlobLink', this.undertakingdocs);
-    frmData.append('ManyscriptPDFLink', this.ManuscriptPDF);
+    frmData.append('ManuscriptPDFLink', this.ManuscriptPDF);
     frmData.append('ManuscriptNo', this.ManuscriptNo);
     frmData.append('Subject', this.selectedSubjectContent);
     frmData.append('Title', this.Titles);
