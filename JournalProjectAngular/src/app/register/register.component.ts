@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RegisterService } from '../Services/Registration/register.service';
+import { RoleService } from '../Services/role/role.service';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +39,7 @@ export class RegisterComponent {
   constructor(
     private Services : RegisterService,
     private registersv : RegisterService, 
-   private services:RegisterService
+   private services:RoleService
    )
    {
    
