@@ -1,0 +1,40 @@
+<br>
+<h1 style="text-align: center;">Role Master</h1>
+
+<br>
+<form>
+    <div class="col-md-12 row">
+        <div class="col-md-4 row"></div>
+        <div class="col-md-5 row">
+            <label><b>Enter the Role Content:</b></label><br>
+            <textarea type="text" class="form-control" name="role" [(ngModel)]="role"  placeholder="please enter here"></textarea>
+           
+            <br><br>
+        </div>
+    </div>
+    <div class="col-md-12 row">
+        <div class="col-md-6 row"></div>
+        <div class="col-md-5 row">
+    <button *ngIf = "save" class="btn btn-primary" (click)="saverole()">save</button> &nbsp; 
+    <button *ngIf = "edit" class="btn" style="background-color: rgb(219, 59, 0);" (click)="Editrole()">Edit</button>  
+        </div>
+    </div>
+    <br>
+</form>
+    <table class="table container">
+        <tr>
+            <th>Sl No.</th>
+            <th>Role Name</th>
+            <th>Created On</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        <tr *ngFor="let role of roleList;index as i">
+            <td>{{i+1}}</td>
+            <td>{{role.roleName}}</td>
+            <td>{{role.createdOn}}</td>
+            <td><button class="btn btn-primary" (click)="updateRow(role)">Edit</button></td>
+            <td><button class="btn btn-danger" (click)="Deleterole(role.roleID)">Delete</button></td>
+        </tr>
+</table>

@@ -1,36 +1,44 @@
-<form class="login">
-    <h2 style="text-align: center;">Welcome, User!</h2>
-    
-      <div class="card-header">
-       
-      </div>
-      <div class="col-md-12 row">
-        <div class="col-md-4"></div>
-            <div class="col-md-4">
-      <div class="login-container">
-       
-        <form >
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="FullName" [(ngModel)]="FullName" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" [(ngModel)]="password" required>
-          </div>
-          <div style="text-align: center;">
-            <button type="button" (click)="login()">Login</button>
 
-        </div>
+    <!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>LOGIN</title> 
+    <link rel="stylesheet" href="login.component.css">
+   
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="title"><span>LOGIN </span></div>
+        <form action="#">
+          <div class="row">
+            <i class="fas fa-user"></i>
+            <input type="text"  id="username" name="FullName" [(ngModel)]="FullName"              placeholder="Email" required>
+          </div>
+          <div class="row">
+            <i class="fas fa-lock"></i>
+            <input type="password"    id="password" name="password" [(ngModel)]="password"              placeholder="Password" required>
+          </div>
+          <div class="pass"><a href="#">Forgot password?</a></div>
+          <div class="row button">
+            <button type="button" (click)="login()" id="login-button">Login</button>
+
+            <!-- <button type="submit"          value="Login"          (click)="login()">Login</button> -->
+
+          </div>
+          <div class="signup-link">Not registered? <a href="#">Signup now</a></div>
         </form>
     </div>
     </div><div class="col-md-4"></div>
 
-      </div>
+      
       
       <div *ngIf ="IsLoggedIn == true" class="navbar-header">
         <a ><b>{{email}}</b></a>        &nbsp; &nbsp; &nbsp; &nbsp;
 
         <a (click)="logout()" style="color: black;">Logout</a> 
 
-    </div> 
+    </div>

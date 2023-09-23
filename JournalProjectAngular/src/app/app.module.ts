@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterComponent } from './register/register.component';
 import { ReviewerComponent } from './reviewer/reviewer.component';
+import { RoleComponent } from './Masters/Role/role/role.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ReviewerComponent } from './reviewer/reviewer.component';
     LoginComponent,
     NavbarComponent,
     RegisterComponent,
-    ReviewerComponent
+    ReviewerComponent,
+    RoleComponent
   ],
   imports: [
     BrowserModule,

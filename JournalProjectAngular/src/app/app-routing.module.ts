@@ -12,6 +12,8 @@ import { RegisterComponent } from './register/register.component';
 import { ManuscriptcontentComponent } from './Masters/manuscriptcontent/manuscriptcontent.component';
 import { PasswordresetComponent } from './Masters/passwordreset/passwordreset.component';
 import { LoginComponent } from './login/login.component';
+import {HttpClientModule} from '@angular/common/http';
+import { RoleComponent } from './Masters/Role/role/role.component';
 
 const routes: Routes = [
   { path:'subjectcontent', component: SubjectcontentComponent},
@@ -26,6 +28,7 @@ const routes: Routes = [
   { path:'typeOfContentMaster', component: ManuscriptcontentComponent},
   { path:'resetpassword', component: PasswordresetComponent},
   { path:'login', component: LoginComponent},
+  {path:'rolecomponent' , component:RoleComponent}
 
 ];
 

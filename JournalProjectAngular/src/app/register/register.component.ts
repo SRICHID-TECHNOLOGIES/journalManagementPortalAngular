@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RegisterService } from '../Services/Registration/register.service';
+import { RoleService } from '../Services/role/role.service';
 
 @Component({
   selector: 'app-register',
@@ -37,15 +38,15 @@ export class RegisterComponent {
   
   constructor(
     private Services : RegisterService,
-    private registersv : RegisterService
-   // private services:RoleService
+    private registersv : RegisterService, 
+   private services:RoleService
    )
    {
    
   }
   ngOnInit() {
     this.getregistration();
-    // this.getrole();
+    this.getrole();
   }
   registerregistration() {
   
@@ -133,13 +134,13 @@ export class RegisterComponent {
       
     })
   }
-  // getrole() {
-  //     this.services.getroleData().subscribe((result: any) => {
-  //       this.roleList = result;
-  //       console.log(this.roleList);
-  //     })
+  getrole() {
+      this.services.getroleData().subscribe((result: any) => {
+        this.roleList = result;
+        console.log(this.roleList);
+      })
       
-  //   }
+    }
     onselectrole(event: any){
   this.selectedrole = parseInt(event.target.value)
      for(var i =0; i<this.roleList.length; i++ ){
