@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RegisterService {
+  getroleData: any;
 
   constructor(private http:HttpClient) { }
 
@@ -15,4 +16,7 @@ export class RegisterService {
   registration(registrationData: any) {
     return this.http.post('http://localhost:44303/api/Registration/registerregistration/', registrationData)
   }
+
+
+
 }
