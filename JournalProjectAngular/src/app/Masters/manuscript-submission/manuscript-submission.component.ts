@@ -25,17 +25,20 @@ export class ManuscriptSubmissionComponent {
   tableLength: any;
   year: any;
   currentMonth: any;
+  undertakingdocs: any;
+  files3: any;
+  files4: any;
+  ManuscriptPDF: any;
   constructor(private Services:ManuscriptserviceService,private httpService:HttpClient){
   }
   ngOnInit() {
     this.getsubjectcontent();
     this.getmanuscriptcontent(); this.getmanuscriptid();
-
   }
 
   getmanuscriptid() {
     this.Services.FetchManuscriptNumber().subscribe((result: any) => {
-      this.tableLength=0;
+      this.tableLength;
       this.tableLength = (this.tableLength + 1).toString().padStart(3, '0');
       const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
       this.currentMonth = monthNames[new Date().getMonth()];
@@ -51,6 +54,19 @@ export class ManuscriptSubmissionComponent {
     this.docs = fileslist2;
   }
 
+  onselectUndertakingform(event: any) {
+    var fileslist3 = '';
+    this.files3 = [].slice.call(event.target.files);
+    fileslist3 = this.files3[0];
+    this.undertakingdocs = fileslist3;
+  }
+
+  onselectpdf(event: any) {
+    var fileslist4 = '';
+    this.files4 = [].slice.call(event.target.files);
+    fileslist4 = this.files4[0];
+    this.docs = fileslist4;
+  }
 
   getsubjectcontent() {
     this.Services.getsubjectcontentData1().subscribe((result: any) => {
@@ -63,8 +79,7 @@ export class ManuscriptSubmissionComponent {
     this.Services.getmanuscriptcontentData().subscribe((result: any) => {
       this.manuscriptcontentList = result;
       console.log(this.manuscriptcontentList);
-    })
-    
+    })   
   }
 
   onSelectManucriptContent(data:any){
@@ -78,13 +93,14 @@ this.selectedSubjectContent = parseInt(data.target.value)
   fileupload(){
     const frmData = new FormData();
     frmData.append('FileBlobLink', this.docs);
+    frmData.append('UndertakingFileBlobLink', this.undertakingdocs);
+    frmData.append('ManyscriptPDFLink', this.ManuscriptPDF);
     frmData.append('ManuscriptNo', this.ManuscriptNo);
     frmData.append('Subject', this.selectedSubjectContent);
     frmData.append('Title', this.Titles);
     frmData.append('ManuscriptType', this.selectedManuscriptContent);
     frmData.append('Abstract', this.Abstract);
     
-
      this.httpService.post('http://localhost:44303/api/Manuscript/Fileupload',frmData).subscribe((data: any) => {
         if (data == 'success') {
           alert('Saved Successfully');
@@ -108,6 +124,8 @@ this.selectedSubjectContent = parseInt(data.target.value)
     // }
     const frmData = new FormData();
     frmData.append('FileBlobLink', this.docs);
+    frmData.append('UndertakingFileBlobLink', this.undertakingdocs);
+    frmData.append('ManyscriptPDFLink', this.ManuscriptPDF);
     frmData.append('ManuscriptNo', this.ManuscriptNo);
     frmData.append('Subject', this.selectedSubjectContent);
     frmData.append('Title', this.Titles);
