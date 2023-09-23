@@ -9,9 +9,7 @@
         <img src="assets/logoo.png " alt="logo" style="width:70%;text-align: left; ">
         <div style="text-align: left; padding-left: 13%;">&nbsp;&nbsp;IWWA JOURNAL</div>
       </div>
-      <div class="col-md-7" style="padding-left: 40%;margin-top: -79px;">
-        <img src="assets/logoo.png " alt="logo" style="width:70%;text-align: center; ">
-      </div>
+     
       <div class="col-md-5" style="padding-left: 30%;margin-top: 50px;">
         <h1>JOURNAL MANAGEMENT PORTAL</h1>
       </div><div class="col-md-3"></div>
@@ -25,11 +23,15 @@
   
         <!-- <li><a [routerLink]="['/journalcomponent']">Home</a></li> -->
         <li><a href="#">About</a></li>
-        <li><a [routerLink]="['/manuscriptsubmission']">Submit Manuscript</a></li>
-        <li><a href="#">Review Submissions</a></li>
+        <li *ngIf ="IsLoggedIn && RoleID == 1003 || RoleID == 2"><a [routerLink]="['/manuscriptsubmission']">Submit Manuscript</a></li>
+        <li *ngIf ="IsLoggedIn && RoleID == 1003"><a [routerLink]="['/authordashboard']">Dashboard</a></li>
+        <li *ngIf ="IsLoggedIn && RoleID == 1004"><a [routerLink]="['/editordashboard']">Dashboard</a></li>
+        <li *ngIf ="IsLoggedIn && RoleID == 1005"><a [routerLink]="['/reviewerdashboard']">Dashboard</a></li>
+
+        <li  *ngIf ="IsLoggedIn"><a href="#">Review Submissions</a></li>
         <li><a href="#">Contact Us</a></li>
-        <li><a [routerLink]="['/register']">Register</a></li>
-        <li>
+        <li  *ngIf ="IsLoggedIn && RoleID == 2"><a [routerLink]="['/register']">Register</a></li>
+        <li  *ngIf ="IsLoggedIn && RoleID == 2">
             <button type="button" class="btn btn-clear dropdown-toggle" data-toggle="dropdown" style="color: white;">
               Masters
             </button>
@@ -39,8 +41,10 @@
               <!-- <a class="dropdown-item" href="#">Link 3</a> -->
             </div>
         </li>
-        <input [routerLink]="['/login']" type="submit" value="Login"> <!-- This is the login button -->
-  
+        <li><a href="#">{{userName}}</a></li>
+ <li><a *ngIf ="!IsLoggedIn" [routerLink]="['/login']">Login</a></li>
+        <li><a *ngIf ="IsLoggedIn" (click)="logout()">Logout</a></li>
+
       </ul>
     </div>
   </nav><br> <br>

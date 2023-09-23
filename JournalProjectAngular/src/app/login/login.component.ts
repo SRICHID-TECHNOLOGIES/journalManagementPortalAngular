@@ -15,15 +15,15 @@ export class LoginComponent {
   password:any;
   route: any;
   getlogin: any;
+  userName: any;
   
-  constructor(private  Services:LoginserviceService , route : Router){
+  constructor(private  Services:LoginserviceService ,private router:Router){
     if(localStorage.getItem("IsLoggedIn") == "true"){
       this.IsLoggedIn = true
       
-      this.password = localStorage.getItem("password")
-      this.email = localStorage.getItem("email")
-      this.RoleID = localStorage.getItem("RoleId")
-    
+      this.email = localStorage.getItem("Email")
+      this.RoleID = localStorage.getItem("RoleID")
+    this.userName=localStorage.getItem("UserName")
 
     
   }
@@ -46,15 +46,22 @@ export class LoginComponent {
 
   login() {
    
-    var login = {
+    var login1 = {
       Email: this.FullName,
-      Password:this.password
+      Password:this.password,
+
 
     }
-    this.Services.savelogin(login).subscribe((result: any) => {
+    this.Services.savelogin(login1).subscribe((result: any) => {
       if (result !="fail") {
-        alert("login successfully");
-        window.location.reload();
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('Email', result.email);
+        localStorage.setItem('UserName', result.fullName);
+        localStorage.setItem('RoleID', result.roleID);
+        localStorage.setItem('IsLoggedIn', 'true');
+        this.router.navigate(['/home']).then(()=>{
+          window.location.reload()
+        })
       } else {
         alert("Invalid credentials!!!")
         window.location.reload();
