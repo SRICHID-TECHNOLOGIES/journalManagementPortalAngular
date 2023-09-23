@@ -31,8 +31,14 @@
           </div>
           <div class="signup-link">Not registered? <a href="#">Signup now</a></div>
         </form>
-      </div>
-    </div> 
+    </div>
+    </div><div class="col-md-4"></div>
 
-  </body>
-</html>
+      
+      
+      <div *ngIf ="IsLoggedIn == true" class="navbar-header">
+        <a ><b>{{email}}</b></a>        &nbsp; &nbsp; &nbsp; &nbsp;
+
+        <a (click)="logout()" style="color: black;">Logout</a> 
+
+    </div>
