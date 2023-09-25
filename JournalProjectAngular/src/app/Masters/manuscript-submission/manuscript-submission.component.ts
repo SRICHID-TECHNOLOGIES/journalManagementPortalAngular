@@ -22,13 +22,14 @@ export class ManuscriptSubmissionComponent {
   selectedSubjectContent: any;
   selectedManuscriptContent: any;
   manuscriptcontentList: any;
-  tableLength: any;
+  tableLength: any = [];
   year: any;
   currentMonth: any;
   undertakingdocs: any;
   files3: any;
   files4: any;
   manuscriptdocs: any;
+  len: any;
   constructor(private Services:ManuscriptserviceService,private httpService:HttpClient){
   }
   ngOnInit() {
@@ -38,8 +39,7 @@ export class ManuscriptSubmissionComponent {
 
   getmanuscriptid() {
     this.Services.FetchManuscriptNumber().subscribe((result: any) => {
-      this.tableLength=0;
-      this.tableLength = (this.tableLength + 1).toString().padStart(3, '0');
+      this.tableLength = (result.length + 1).toString().padStart(3, '0');
       const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
       this.currentMonth = monthNames[new Date().getMonth()];
       this.year = new Date().getFullYear();
@@ -111,6 +111,7 @@ this.selectedSubjectContent = parseInt(data.target.value)
      this.httpService.post('http://localhost:44303/api/Manuscript/Fileupload',frmData).subscribe((data: any) => {
         if (data == 'success') {
           alert('Saved Successfully');
+          window.location.reload();
         } else {
           alert('Something went wrong!!');
         }
@@ -132,7 +133,7 @@ this.selectedSubjectContent = parseInt(data.target.value)
     const frmData = new FormData();
     frmData.append('FileBlobLink', this.docs);
     frmData.append('UndertakingFileBlobLink', this.undertakingdocs);
-    frmData.append('ManyscriptPDFLink', this.manuscriptdocs);
+    frmData.append('ManuscriptPDFLink', this.manuscriptdocs);
     frmData.append('ManuscriptNo', this.ManuscriptNo);
     frmData.append('Subject', this.selectedSubjectContent);
     frmData.append('Title', this.Titles);
