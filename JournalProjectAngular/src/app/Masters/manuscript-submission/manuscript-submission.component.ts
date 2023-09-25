@@ -28,7 +28,7 @@ export class ManuscriptSubmissionComponent {
   undertakingdocs: any;
   files3: any;
   files4: any;
-  ManuscriptPDF: any;
+  manuscriptdocs: any;
   constructor(private Services:ManuscriptserviceService,private httpService:HttpClient){
   }
   ngOnInit() {
@@ -47,6 +47,9 @@ export class ManuscriptSubmissionComponent {
     })
   }
   
+
+
+
   onselectdoc(event: any) {
     var fileslist2 = '';
     this.files2 = [].slice.call(event.target.files);
@@ -65,8 +68,12 @@ export class ManuscriptSubmissionComponent {
     var fileslist4 = '';
     this.files4 = [].slice.call(event.target.files);
     fileslist4 = this.files4[0];
-    this.docs = fileslist4;
+    this.manuscriptdocs = fileslist4;
   }
+
+
+
+
 
   getsubjectcontent() {
     this.Services.getsubjectcontentData1().subscribe((result: any) => {
@@ -94,7 +101,7 @@ this.selectedSubjectContent = parseInt(data.target.value)
     const frmData = new FormData();
     frmData.append('FileBlobLink', this.docs);
     frmData.append('UndertakingFileBlobLink', this.undertakingdocs);
-    frmData.append('ManuscriptPDFLink', this.ManuscriptPDF);
+    frmData.append('ManuscriptPDFLink', this.manuscriptdocs);
     frmData.append('ManuscriptNo', this.ManuscriptNo);
     frmData.append('Subject', this.selectedSubjectContent);
     frmData.append('Title', this.Titles);
@@ -125,7 +132,7 @@ this.selectedSubjectContent = parseInt(data.target.value)
     const frmData = new FormData();
     frmData.append('FileBlobLink', this.docs);
     frmData.append('UndertakingFileBlobLink', this.undertakingdocs);
-    frmData.append('ManyscriptPDFLink', this.ManuscriptPDF);
+    frmData.append('ManyscriptPDFLink', this.manuscriptdocs);
     frmData.append('ManuscriptNo', this.ManuscriptNo);
     frmData.append('Subject', this.selectedSubjectContent);
     frmData.append('Title', this.Titles);
