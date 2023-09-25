@@ -49,7 +49,6 @@ export class ManuscriptSubmissionComponent {
   
 
 
-
   onselectdoc(event: any) {
     var fileslist2 = '';
     this.files2 = [].slice.call(event.target.files);
