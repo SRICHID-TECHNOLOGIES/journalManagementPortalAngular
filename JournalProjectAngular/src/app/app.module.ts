@@ -20,6 +20,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterComponent } from './register/register.component';
 import { ReviewerComponent } from './reviewer/reviewer.component';
 import { RoleComponent } from './Masters/Role/role/role.component';
+import { AuthorindividualsubmissionsComponent } from './authorindividualsubmissions/authorindividualsubmissions.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { RoleComponent } from './Masters/Role/role/role.component';
     NavbarComponent,
     RegisterComponent,
     ReviewerComponent,
-    RoleComponent
+    RoleComponent,
+    AuthorindividualsubmissionsComponent
   ],
   imports: [
     BrowserModule,

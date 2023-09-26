@@ -58,6 +58,8 @@ export class LoginComponent {
         localStorage.setItem('Email', result.email);
         localStorage.setItem('UserName', result.fullName);
         localStorage.setItem('RoleID', result.roleID);
+        localStorage.setItem('RegisterID', result.registerID);
+        
         localStorage.setItem('IsLoggedIn', 'true');
         this.router.navigate(['/home']).then(()=>{
           window.location.reload()

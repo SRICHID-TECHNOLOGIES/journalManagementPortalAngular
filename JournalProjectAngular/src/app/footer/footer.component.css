@@ -1,5 +1,20 @@
-.row {
+/* .row {
     background-color: #0b0101;
     color: white;
     padding: 10px;
+} */
+
+
+.footer {
+    background-color: #1c2331;
+    color: #fff;
+    padding: 10px; /* Add padding to your footer content */
+    width: 100%; /* Set the width to 100% to make it full-width */
+    margin: 0; /* Remove any default margin */
+}
+
+.site-info{
+    background-color: #1c2331;
+    width: 100%;
+    text-align: center;
 }

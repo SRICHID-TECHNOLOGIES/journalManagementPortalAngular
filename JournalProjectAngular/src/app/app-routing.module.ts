@@ -14,6 +14,7 @@ import { PasswordresetComponent } from './Masters/passwordreset/passwordreset.co
 import { LoginComponent } from './login/login.component';
 import {HttpClientModule} from '@angular/common/http';
 import { RoleComponent } from './Masters/Role/role/role.component';
+import { AuthorindividualsubmissionsComponent } from './authorindividualsubmissions/authorindividualsubmissions.component';
 
 const routes: Routes = [
   { path:'subjectcontent', component: SubjectcontentComponent},
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path:'typeOfContentMaster', component: ManuscriptcontentComponent},
   { path:'resetpassword', component: PasswordresetComponent},
   { path:'login', component: LoginComponent},
-  {path:'rolecomponent' , component:RoleComponent}
+  {path:'rolecomponent' , component:RoleComponent},
+  {path:'authorindividualsubmission' , component:AuthorindividualsubmissionsComponent}
 
 ];
 
