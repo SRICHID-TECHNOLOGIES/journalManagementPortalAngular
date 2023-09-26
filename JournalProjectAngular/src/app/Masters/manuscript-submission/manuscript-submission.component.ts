@@ -30,7 +30,20 @@ export class ManuscriptSubmissionComponent {
   files4: any;
   manuscriptdocs: any;
   len: any;
+  IsLoggedIn: any;
+  email: any;
+  RoleID: any;
+  userName: any;
   constructor(private Services:ManuscriptserviceService,private httpService:HttpClient){
+    if(localStorage.getItem("IsLoggedIn") == "true"){
+      this.IsLoggedIn = true
+      
+      this.email = localStorage.getItem("Email")
+      this.RoleID = localStorage.getItem("RoleID")
+    this.userName=localStorage.getItem("UserName")
+
+    
+  }
   }
   ngOnInit() {
     this.getsubjectcontent();
@@ -47,8 +60,6 @@ export class ManuscriptSubmissionComponent {
     })
   }
   
-
-
 
   onselectdoc(event: any) {
     var fileslist2 = '';
@@ -107,6 +118,7 @@ this.selectedSubjectContent = parseInt(data.target.value)
     frmData.append('Title', this.Titles);
     frmData.append('ManuscriptType', this.selectedManuscriptContent);
     frmData.append('Abstract', this.Abstract);
+    frmData.append('Email', this.email);
     
      this.httpService.post('http://localhost:44303/api/Manuscript/Fileupload',frmData).subscribe((data: any) => {
         if (data == 'success') {
