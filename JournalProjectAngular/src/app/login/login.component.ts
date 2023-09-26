@@ -32,7 +32,6 @@ export class LoginComponent {
   ngOnInit(): void {
   }
 
-
   logout(){
     this.IsLoggedIn = false;
     localStorage.setItem("IsLoggedIn", "false");
