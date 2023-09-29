@@ -22,20 +22,15 @@
             <table>
                 <thead>
                     <tr>
-                        
-                        <th>Manuscript No</th>
+                        <th>Author Name</th>
                         <th>Subject</th>
                         <th>Title</th>
-                        <th>Manuscript Type</th>
+                        <th>ManuscriptType</th>
                         <th>Abstract</th>
-                        <th>Created On</th>
-                        <th>Plagiarismurl</th>
-                        <th>Undertakingdocurl</th>
-                        <th>Plagiarismdocname</th>
-                        <th>TitleID</th>
-                        <th>ManuscriptPDF</th>
-                        <th>UndertakingDocName</th>
-                        <th>ManuscriptPDFName</th>
+                        <th>Plagiarism Report </th>                      
+                        <th> Author Undertaking Form</th>
+                        <th>Manuscript Type</th>
+                        <th>Manuscript</th>
                         <th>RegisterID</th>
                     
 
@@ -52,20 +47,18 @@
 
 
 <tr *ngFor="let manuscriptcontentList of manuscriptcontentList;index as i">
-  <td>{{i+1}}</td>
-  <td>{{manuscriptcontentList.manuscriptNo}}</td>
-  <td>{{manuscriptcontentList.subject}}</td>
-  <td>{{manuscriptcontentList.title}}</td>
-  <td>{{manuscriptcontentList.manuscriptType}}</td>
-  <td>{{manuscriptcontentList.abstract}}</td>
-  <td>{{manuscriptcontentList.createdOn}}</td>
-  <td>{{manuscriptcontentList.plagiarismurl}}</td>
-  <td>{{manuscriptcontentList.undertakingdocurl}}</td>
-  <td>{{manuscriptcontentList.plagiarismdocname}}</td>
-  <td>{{manuscriptcontentList.titleID}}</td>
-    <td>{{manuscriptcontentList.manuscriptPDF}}</td>
-      <td>{{manuscriptcontentList.undertakingDocName}}</td>
-        <td>{{manuscriptcontentList.manuscriptPDFName}}</td>
+  
+  
+    <td>{{ manuscriptcontentList.autorName}}</td>
+    <td>{{ manuscriptcontentList.subject}}</td>
+    <td>{{ manuscriptcontentList.title}}</td>
+    <td>{{ manuscriptcontentList.manuscriptType}}</td>
+    <td>{{ manuscriptcontentList.abstract}}</td>
+    <td>{{ manuscriptcontentList.plagiarismurl}}</td>
+    <td>{{ manuscriptcontentList.undertakingdocurl}}</td>
+  <td>{{ manuscriptcontentList.manuscriptType}}</td>
+    <td>{{ manuscriptcontentList.manuscriptPDF}}</td>
+   
           <td>{{manuscriptcontentList.registerID}}</td>
 
 

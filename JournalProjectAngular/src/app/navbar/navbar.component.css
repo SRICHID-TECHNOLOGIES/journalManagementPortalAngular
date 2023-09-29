@@ -57,11 +57,7 @@ nav a {
   }
   
   /* Create a right-aligned (split) link inside the navigation bar */
-  .topnav a.split {
-    float: right;
-    background-color: #1c3cec;
-    color: white;
-  }
+  
   
   .dropdown-menu {
     display: block;
@@ -71,7 +67,8 @@ nav a {
 
 
 
-  
+  /* Center the image horizontally and vertically */
+
 
   
 /* Define the two-color navbar */
