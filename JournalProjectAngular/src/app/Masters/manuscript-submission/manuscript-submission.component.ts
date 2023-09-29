@@ -34,6 +34,7 @@ export class ManuscriptSubmissionComponent {
   email: any;
   RoleID: any;
   userName: any;
+  RegisterID: any;
   constructor(private Services:ManuscriptserviceService,private httpService:HttpClient){
     if(localStorage.getItem("IsLoggedIn") == "true"){
       this.IsLoggedIn = true
@@ -41,6 +42,7 @@ export class ManuscriptSubmissionComponent {
       this.email = localStorage.getItem("Email")
       this.RoleID = localStorage.getItem("RoleID")
     this.userName=localStorage.getItem("UserName")
+    this.RegisterID=localStorage.getItem("RegisterID")
 
     
   }
@@ -115,6 +117,7 @@ this.selectedSubjectContent = parseInt(data.target.value)
     frmData.append('ManuscriptType', this.selectedManuscriptContent);
     frmData.append('Abstract', this.Abstract);
     frmData.append('Email', this.email);
+    frmData.append('RegisterID', this.RegisterID);
     
      this.httpService.post('http://localhost:44303/api/Manuscript/Fileupload',frmData).subscribe((data: any) => {
         if (data == 'success') {
@@ -127,34 +130,35 @@ this.selectedSubjectContent = parseInt(data.target.value)
 }
  
 
-  onclick(){
-    // const onsubmit:abc={
-    //   Userid:this.userid,
-    //   ManuscriptNo:this.ManuscriptNo,
-    //   Subject:this.Subjects,
-    //   Title:this.Titles,
-    //   ManuscriptType:this.ManuscriptType,
-    //   Abstract:this.Abstract,
-    //   CreatedOn:this.CreatedOn,
+  // onclick(){
+  //   // const onsubmit:abc={
+  //   //   Userid:this.userid,
+  //   //   ManuscriptNo:this.ManuscriptNo,
+  //   //   Subject:this.Subjects,
+  //   //   Title:this.Titles,
+  //   //   ManuscriptType:this.ManuscriptType,
+  //   //   Abstract:this.Abstract,
+  //   //   CreatedOn:this.CreatedOn,
 
-    // }
-    const frmData = new FormData();
-    frmData.append('FileBlobLink', this.docs);
-    frmData.append('UndertakingFileBlobLink', this.undertakingdocs);
-    frmData.append('ManuscriptPDFLink', this.manuscriptdocs);
-    frmData.append('ManuscriptNo', this.ManuscriptNo);
-    frmData.append('Subject', this.selectedSubjectContent);
-    frmData.append('Title', this.Titles);
-    frmData.append('ManuscriptType', this.selectedManuscriptContent);
-    frmData.append('Abstract', this.Abstract);
-    this.Services.postsavedata(frmData).subscribe((data:any)=>{
-      if(data=="success"){
-        alert("Saved successfully");
-      }
+  //   // }
+  //   const frmData = new FormData();
+  //   frmData.append('FileBlobLink', this.docs);
+  //   frmData.append('UndertakingFileBlobLink', this.undertakingdocs);
+  //   frmData.append('ManuscriptPDFLink', this.manuscriptdocs);
+  //   frmData.append('ManuscriptNo', this.ManuscriptNo);
+  //   frmData.append('Subject', this.selectedSubjectContent);
+  //   frmData.append('Title', this.Titles);
+  //   frmData.append('ManuscriptType', this.selectedManuscriptContent);
+  //   frmData.append('Abstract', this.Abstract);
+  //   frmData.append('RegisterID', this.RegisterID);
+  //   this.Services.postsavedata(frmData).subscribe((data:any)=>{
+  //     if(data=="success"){
+  //       alert("Saved successfully");
+  //     }
 
-      console.log(data)
-    }
-    );
-    console.log(onsubmit)
-  }
+  //     console.log(data)
+  //   }
+  //   );
+  //   console.log(onsubmit)
+  // }
 }

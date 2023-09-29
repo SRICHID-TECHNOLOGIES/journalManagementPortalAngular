@@ -1,0 +1,106 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author's Dashboard</title>
+   
+</head>
+<body>
+    <header>
+        <!-- Header content -->
+    </header>
+
+    <main>
+        <section class="article-list">
+            <div style="text-align: center;">
+            <!-- Content above the table goes here -->
+            <h2>Author's Dashboard</h2>
+        </div>
+            <table>
+                <thead>
+                    <tr>
+                        
+                        <th>Manuscript No</th>
+                        <th>Subject</th>
+                        <th>Title</th>
+                        <th>Manuscript Type</th>
+                        <th>Abstract</th>
+                        <th>Created On</th>
+                        <th>Plagiarismurl</th>
+                        <th>Undertakingdocurl</th>
+                        <th>Plagiarismdocname</th>
+                        <th>TitleID</th>
+                        <th>ManuscriptPDF</th>
+                        <th>UndertakingDocName</th>
+                        <th>ManuscriptPDFName</th>
+                        <th>RegisterID</th>
+                    
+
+                    </tr>
+                </thead>
+                <tbody>
+                    
+
+
+
+
+
+
+
+
+<tr *ngFor="let manuscriptcontentList of manuscriptcontentList;index as i">
+  <td>{{i+1}}</td>
+  <td>{{manuscriptcontentList.manuscriptNo}}</td>
+  <td>{{manuscriptcontentList.subject}}</td>
+  <td>{{manuscriptcontentList.title}}</td>
+  <td>{{manuscriptcontentList.manuscriptType}}</td>
+  <td>{{manuscriptcontentList.abstract}}</td>
+  <td>{{manuscriptcontentList.createdOn}}</td>
+  <td>{{manuscriptcontentList.plagiarismurl}}</td>
+  <td>{{manuscriptcontentList.undertakingdocurl}}</td>
+  <td>{{manuscriptcontentList.plagiarismdocname}}</td>
+  <td>{{manuscriptcontentList.titleID}}</td>
+    <td>{{manuscriptcontentList.manuscriptPDF}}</td>
+      <td>{{manuscriptcontentList.undertakingDocName}}</td>
+        <td>{{manuscriptcontentList.manuscriptPDFName}}</td>
+          <td>{{manuscriptcontentList.registerID}}</td>
+
+
+
+
+
+
+
+
+
+          
+
+       
+       
+        
+                
+       
+        <!-- Add more rows as needed -->
+</tr></tbody>
+
+
+
+
+
+
+
+
+
+</table>
+
+
+</section>
+
+
+</main>
+
+</body>
+</html>

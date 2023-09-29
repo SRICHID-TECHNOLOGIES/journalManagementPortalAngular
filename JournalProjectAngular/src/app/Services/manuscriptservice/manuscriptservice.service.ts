@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManuscriptserviceService {
-  public weburl="http://localhost:44303/"
-  constructor(private http:HttpClient) { }
+  public weburl="http://localhost:44303"
+ 
+  
+  constructor(private http:HttpClient,) { }
 
   postsavedata(id:any): any{
     return this.http.post(this.weburl+"api/Manuscript/Fileupload",id) 
@@ -18,6 +21,7 @@ export class ManuscriptserviceService {
     return this.http.get('http://localhost:44303'+'/api/Registration/GetsubjectcontentData')
   }
 
+  
   getmanuscriptcontentData() {
     return this.http.get('http://localhost:44303/api/ManuscriptContent/getmanuscriptcontentData')
   }
@@ -27,5 +31,21 @@ export class ManuscriptserviceService {
   FetchManuscriptNumber(){
     return this.http.get('http://localhost:44303/api/Manuscript/FetchManuscriptNumber')
   }
+ 
+
+
+  getManusubmissionDetailsByRegisterID(id:any){
+    return this.http.get('http://localhost:44303/api/Manuscript/GetManuscriptDetailsByRegisterID/'+id)
+  }
+
+
+
+
+
+  
+
+ 
+
+ 
 
 }
