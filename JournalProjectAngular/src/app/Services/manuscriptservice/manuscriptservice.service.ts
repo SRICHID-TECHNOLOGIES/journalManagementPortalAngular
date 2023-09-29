@@ -21,7 +21,9 @@ export class ManuscriptserviceService {
   getmanuscriptcontentData() {
     return this.http.get('http://localhost:44303/api/ManuscriptContent/getmanuscriptcontentData')
   }
-  
+  getmanuscriptsubmissionData() {
+    return this.http.get('http://localhost:44303/api/Manuscript/getmanuscriptsubmissionData')
+  }
   FetchManuscriptNumber(){
     return this.http.get('http://localhost:44303/api/Manuscript/FetchManuscriptNumber')
   }

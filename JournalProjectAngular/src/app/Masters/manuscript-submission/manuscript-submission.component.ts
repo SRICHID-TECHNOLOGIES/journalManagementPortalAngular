@@ -82,10 +82,6 @@ export class ManuscriptSubmissionComponent {
     this.manuscriptdocs = fileslist4;
   }
 
-
-
-
-
   getsubjectcontent() {
     this.Services.getsubjectcontentData1().subscribe((result: any) => {
       this.subjectcontentList = result;
