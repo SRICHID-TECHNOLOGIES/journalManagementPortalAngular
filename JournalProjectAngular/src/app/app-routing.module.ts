@@ -13,6 +13,7 @@ import { ManuscriptcontentComponent } from './Masters/manuscriptcontent/manuscri
 import { PasswordresetComponent } from './Masters/passwordreset/passwordreset.component';
 import { LoginComponent } from './login/login.component';
 import {HttpClientModule} from '@angular/common/http';
+
 import { RoleComponent } from './Masters/Role/role/role.component';
 import { AuthorindividualsubmissionsComponent } from './authorindividualsubmissions/authorindividualsubmissions.component';
 

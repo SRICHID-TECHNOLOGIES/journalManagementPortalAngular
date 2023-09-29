@@ -27,6 +27,5 @@ export class ManuscriptserviceService {
   FetchManuscriptNumber(){
     return this.http.get('http://localhost:44303/api/Manuscript/FetchManuscriptNumber')
   }
-  
 
 }
