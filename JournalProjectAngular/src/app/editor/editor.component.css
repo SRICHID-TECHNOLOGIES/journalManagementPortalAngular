@@ -68,3 +68,8 @@ tr:hover {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+/* Adjust the z-index of the modal backdrop */
+.modal-backdrop.show {
+z-index: 0000;
+}
+  
