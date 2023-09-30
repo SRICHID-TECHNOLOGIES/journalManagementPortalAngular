@@ -21,6 +21,7 @@ import { RegisterComponent } from './register/register.component';
 import { ReviewerComponent } from './reviewer/reviewer.component';
 import { RoleComponent } from './Masters/Role/role/role.component';
 import { AuthorindividualsubmissionsComponent } from './authorindividualsubmissions/authorindividualsubmissions.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AuthorindividualsubmissionsComponent } from './authorindividualsubmissi
     RegisterComponent,
     ReviewerComponent,
     RoleComponent,
-    AuthorindividualsubmissionsComponent
+    AuthorindividualsubmissionsComponent,
+    
   ],
   imports: [
     BrowserModule,
