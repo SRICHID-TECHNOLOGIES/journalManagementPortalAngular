@@ -48,6 +48,9 @@ export class RegisterComponent {
     this.getregistration();
     this.getrole();
   }
+
+
+
   registerregistration() {
   
     if(this.Password != this.ConfirmPassword){
@@ -90,7 +93,10 @@ export class RegisterComponent {
     else if(this.Pincode== null || this.Pincode== undefined){
       alert("Please enter the Pincode")
     }
-   
+
+   else if(!this.Email.includes('@')){
+      alert("please enter valid Email id")
+     }
     
   
     else{
@@ -115,7 +121,7 @@ export class RegisterComponent {
       }
       this.registersv.registration(registrationData).subscribe((result: any) => {
         if (result == "success") {
-          alert("Saved successfully");
+          alert("Registered successfully");
           window.location.reload();
         } else {
           alert("Somthing went wrong!!!")
