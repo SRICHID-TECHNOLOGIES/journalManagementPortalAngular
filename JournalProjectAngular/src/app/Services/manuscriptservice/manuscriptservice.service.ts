@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ManuscriptserviceService {
   public weburl="http://localhost:44303"
+
  
   
   constructor(private http:HttpClient,) { }
@@ -36,6 +37,7 @@ export class ManuscriptserviceService {
     return this.http.get('http://localhost:44303/api/Manuscript/FetchAuthorName')
     
   }
+
 
   getManusubmissionDetailsByRegisterID(id:any){
     return this.http.get('http://localhost:44303/api/Manuscript/GetManuscriptDetailsByRegisterID/'+id)

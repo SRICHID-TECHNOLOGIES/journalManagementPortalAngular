@@ -8,87 +8,177 @@
 <body>
     <div style="background-color: #91c8f5" class="container mt-5">
         <h2>Author Registration</h2>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="fullName">Full Name:</label>
+                    <label style="font-size: larger;" for="fullName">Full Name:</label>
                     <input type="text" class="form-control" id="FullName" [(ngModel)]="FullName" required>
                 </div>
                 <div class="form-group">
-                    <label for="Phone">Phone:</label>
+                    <label style="font-size: larger;" for="Phone">Phone:</label>
                     <input type="number" class="form-control" id="Phone" [(ngModel)]="Phone" required>
                 </div>
                 <div class="form-group">
-                    <label for="Email">Email:</label>
-                    <input
-                        type="email"
-                        class="form-control"
-                        id="Email"
-                        [(ngModel)]="Email"                    
-                        inputmode="email" >
+                    <label style="font-size: larger;" for="Email">Email:</label>
+                    <input type="email" class="form-control" id="Email" [(ngModel)]="Email" required>
                 </div>
-
-
-                
                 <div class="form-group">
-                    <label for="Profession">Profession:</label>
+                    <label style="font-size: larger;" for="Profession">Profession:</label>
                     <input type="text" class="form-control" id="Profession" [(ngModel)]="Profession" required>
+                    <br> <br>
+
+
+                    <div class="form-group">
+                        <label style="font-size: larger;" for="role" class>Role Name:</label>
+
+
+                        <select (change)="onselectrole($event)" id="role" name="RoleNames">
+                            <option> select option</option>
+                            <option *ngFor="let data of roleList" [value]=data.roleID> {{data.roleName}}</option>
+
+
+                        </select>
+
+
+
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="Role">Role Name:</label>
-                    <select (change)="onselectrole($event)" class="form-control">
-                        <option>Select An Option</option>
-                        <option *ngFor="let data of roleList" [value]="data.roleID">{{ data.roleName }}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Organisation">Organisation:</label>
+                    <label style="font-size: larger;" for="Organisation">Organisation:</label>
                     <input type="text" class="form-control" id="Organisation" [(ngModel)]="Organisation">
                 </div>
+
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="College">College:</label>
+                    <label style="font-size: larger;" for="college">College:</label>
                     <input type="text" class="form-control" id="College" [(ngModel)]="College">
                 </div>
                 <div class="form-group">
-                    <label for="PostalAddress">Postal Address:</label>
-                    <textarea class="form-control" id="PostalAddress" [(ngModel)]="PostalAddress"></textarea>
+                    <label style="font-size: larger;" for="PostalAddress">Postal Address:</label>
+                    <input type="text" class="form-control" id="PostalAddress" [(ngModel)]="PostalAddress">
+
                 </div>
-                
-                
                 <div class="form-group">
-                    <label for="Area">Lane/ Area:</label>
+                    <label style="font-size: larger;" for="Area">Lane/ Area:</label>
                     <input type="text" class="form-control" id="Area" [(ngModel)]="Area">
                 </div>
                 <div class="form-group">
-                    <label for="City">City:</label>
+                    <label style="font-size: larger;" for="City">City:</label>
                     <input type="text" class="form-control" id="City" [(ngModel)]="City" required>
                 </div>
                 <div class="form-group">
-                    <label for="State">State:</label>
+                    <label style="font-size: larger;" for="State">State:</label>
                     <input type="text" class="form-control" id="State" [(ngModel)]="State" required>
+
+
                 </div>
                 <div class="form-group">
-                    <label for="Pincode">Pincode:</label>
+                    <label style="font-size: larger;" for="Pincode">Pincode:</label>
                     <input type="number" class="form-control" id="Pincode" [(ngModel)]="Pincode" required>
                 </div>
+
             </div>
+            <!-- Password Field -->
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="Password">Password:</label>
-                    <input type="password" class="form-control" id="Password" [(ngModel)]="Password">
+                    <label style="font-size: larger;" for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" [(ngModel)]="Password">
                 </div>
             </div>
+
+            <!-- Confirm Password Field -->
+
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="ConfirmPassword">Confirm Password:</label>
-                    <input type="password" class="form-control" id="ConfirmPassword" [(ngModel)]="ConfirmPassword">
+                    <label style="font-size: larger;" for="confirmPassword">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirmPassword" [(ngModel)]="ConfirmPassword">
+                    <h2>Author Registration</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fullName">Full Name:</label>
+                                <input type="text" class="form-control" id="FullName" [(ngModel)]="FullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Phone">Phone:</label>
+                                <input type="number" class="form-control" id="Phone" [(ngModel)]="Phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Email">Email:</label>
+                                <input type="email" class="form-control" id="Email" [(ngModel)]="Email"
+                                    inputmode="email">
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="Profession">Profession:</label>
+                                <input type="text" class="form-control" id="Profession" [(ngModel)]="Profession"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Role">Role Name:</label>
+                                <select (change)="onselectrole($event)" class="form-control">
+                                    <option>Select An Option</option>
+                                    <option *ngFor="let data of roleList" [value]="data.roleID">{{ data.roleName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="Organisation">Organisation:</label>
+                                <input type="text" class="form-control" id="Organisation" [(ngModel)]="Organisation">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="College">College:</label>
+                                <input type="text" class="form-control" id="College" [(ngModel)]="College">
+                            </div>
+                            <div class="form-group">
+                                <label for="PostalAddress">Postal Address:</label>
+                                <textarea class="form-control" id="PostalAddress"
+                                    [(ngModel)]="PostalAddress"></textarea>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="Area">Lane/ Area:</label>
+                                <input type="text" class="form-control" id="Area" [(ngModel)]="Area">
+                            </div>
+                            <div class="form-group">
+                                <label for="City">City:</label>
+                                <input type="text" class="form-control" id="City" [(ngModel)]="City" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="State">State:</label>
+                                <input type="text" class="form-control" id="State" [(ngModel)]="State" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Pincode">Pincode:</label>
+                                <input type="number" class="form-control" id="Pincode" [(ngModel)]="Pincode" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Password">Password:</label>
+                                <input type="password" class="form-control" id="Password" [(ngModel)]="Password">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ConfirmPassword">Confirm Password:</label>
+                                <input type="password" class="form-control" id="ConfirmPassword"
+                                    [(ngModel)]="ConfirmPassword">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-primary" (click)="registerregistration()">Register</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div style="text-align: center;">
-            <button type="submit" class="btn btn-primary" (click)="registerregistration()">Register</button>
         </div>
     </div>
 </body>

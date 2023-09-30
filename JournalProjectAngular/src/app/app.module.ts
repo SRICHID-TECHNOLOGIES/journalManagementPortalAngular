@@ -20,7 +20,9 @@ import { RegisterComponent } from './register/register.component';
 import { ReviewerComponent } from './reviewer/reviewer.component';
 import { RoleComponent } from './Masters/Role/role/role.component';
 import { AuthorindividualsubmissionsComponent } from './authorindividualsubmissions/authorindividualsubmissions.component';
-import { NgxDocViewerModule } from 'ngx-doc-viewer'; 
+
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { ReviewerpageComponent } from './reviewerpage/reviewerpage.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,9 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
     RegisterComponent,
     ReviewerComponent,
     RoleComponent,
-    AuthorindividualsubmissionsComponent
+    AuthorindividualsubmissionsComponent,
+    ReviewerpageComponent,
+    
   ],
   imports: [
     BrowserModule,
