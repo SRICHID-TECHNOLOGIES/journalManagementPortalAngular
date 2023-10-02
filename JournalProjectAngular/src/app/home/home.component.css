@@ -4,10 +4,6 @@ body, h1, h2, h3, p, ul, li {
 }
 
 /* Global styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #89c0ee;
-}
 
 
 
@@ -21,6 +17,7 @@ body {
     color:rgb(31, 11, 11);
 
 }
+
 
 
 
@@ -78,9 +75,9 @@ body {
 
   
 
-  .faq-dropdown {
+  /* .faq-dropdown {
     display: none; /* Initially hide dropdown content */
-  }
+  
 
   /* Style for the FAQ questions (can be links or buttons) */
   .faq-question {
@@ -109,14 +106,14 @@ body {
     border-radius: 4px;
     padding: 10px;
     margin-bottom: 5px;
-    background-color: #f7f7f7;
+    background-color: #89c0ee;
     position: relative;
 }
 
 .faq-answer {
     display: none;
     padding: 20px;
-    background-color: #fff;
+    background-color: #89c0ee;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -128,7 +125,7 @@ body {
     top: 10px;
     right: 10px;
     font-size: 14px;
-}
+} */
 a
 {
     color: #117eeb;
@@ -187,3 +184,55 @@ a:link {
     text-align: center;
     background-color: #eef2f5;
   }
+
+
+
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #89c0ee;
+}
+
+.faq-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.faq-item {
+    margin-bottom: 20px;
+}
+
+.faq-question {
+    cursor: pointer;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #f7f7f7;
+}
+
+.faq-answer {
+    display: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.faq-question:hover {
+    background-color: #e5e5e5;
+}
+
+.faq-question.active {
+    background-color: #e5e5e5;
+}
+
+.faq-question.active + .faq-answer {
+    display: block;
+}
+

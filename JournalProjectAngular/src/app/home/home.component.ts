@@ -6,5 +6,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+// Get all FAQ questions and answers
+
 
 }
+             
+
+
+
+
+
+
+
+
+

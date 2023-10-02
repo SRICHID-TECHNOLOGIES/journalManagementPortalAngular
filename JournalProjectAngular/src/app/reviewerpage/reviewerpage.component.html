@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviewer Page</title>
+   
+    <!-- Include Bootstrap CSS from a CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <h1>Reviewer Page</h1><br>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sr. No</th>
+                    <th>DETAILS</th>
+                    <th>COMMENTS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Paper Title</td>
+                    <td [routerLink]="['/manuscriptsubmission',Titles]"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Author Name</td>
+                    <td [routerLink]="['/register',FullName]"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Serial Number of People</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Name of the Reviewer</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Date of receipt of Paper</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Date of submission of Review</td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>
+                        Technical Evaluation<br>
+                        Originality of Paper<br>
+                        Technical Soundness<br>
+                        Authenticity<br>
+                        Significance<br>
+                        Clarity of presentation<br>
+                        Relevance<br>
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option value="1">1 - Poor</option>
+                            <option value="2">2 - Average</option>
+                            <option value="3">3 - Good</option>
+                            <option value="4">4 - Better</option>
+                            <option value="5">5 - Best</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Length of Paper (Tick mark any one relevant)</td>
+                    <td>
+                        <select class="form-control">
+                            <option value="1">1. Adequate</option>
+                            <option value="2">2. To be shortened</option>
+                            <option value="3">3. To be extended</option>
+                        </select>
+                    </td><br><br><br><br><br><br>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>English (India) Language and Grammar</td>
+                    <td>
+                        <select class="form-control">
+                            <option value="1">1. Very Poor – Rewrite the Paper</option>
+                            <option value="2">2. Poor – Get Corrected & then resubmit</option>
+                            <option value="3">3. Good – To be accepted as such</option>
+                        </select>
+                    </td><br><br><br><br><br>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>General observation of the paper: Is the paper written as per IWWA guidelines?</td>
+                    <td>
+                        <select class="form-control">
+                            <option value="1">Yes</option>
+                            <option value="2">No</option>
+                        </select>
+                    </td><br><br><br><br><br>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>
+                        1. Paper Format<br>
+                        2. Abstract<br>
+                        3. Introduction & Methodology<br>
+                        4. Accuracy & Consistency<br>
+                        5. Result & Conclusion<br>
+                        6. Table & Graph<br>
+                        7. Picture<br>
+                        8. Reference<br>
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option value="1">1. Irrelevant / Relevant</option>
+                            <option value="2">2. Not to the Point / To the Point</option>
+                            <option value="3">3. With many errors / Without any errors</option>
+                            <option value="4">4. Irrelevant / Related to Findings</option>
+                            <option value="5">5. Irrelevant / Related to Text</option>
+                            <option value="6">6. Not required / Required</option>
+                            <option value="7">7. Not related to text / Properly done</option>
+                            <option value="8">8. Too many, not related / Properly done</option>
+                        </select>
+                    </td><br><br><br><br><br><br><br><br><br><br>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>Overall Recommendation</td>
+                    <td>
+                        <select class="form-control">
+                            <option value="1">1. Accept (Strong) As It is</option>
+                            <option value="2">2. Accept after modification</option>
+                            <option value="3">3. Reject in totality</option>
+                            <option value="4">4. Reject and ask to resubmit with details</option>
+                        </select>
+                    </td><br><br><br><br><br><br>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>Under what category this paper can be accepted</td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>14</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>A short summary of justification of your recommendations</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery from a CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

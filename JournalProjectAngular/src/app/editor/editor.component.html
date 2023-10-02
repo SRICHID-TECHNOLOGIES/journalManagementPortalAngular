@@ -1,45 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor's Dashboard</title>
-    <link rel="stylesheet" href="editor.component.css">
-</head>
-
-<body>
-    <header>
-        <!-- Header content -->
-    </header>
     
-    <main>
-        <section class="article-list" *ngIf="tableView==true">
-            <div style="text-align: center; overflow-x:auto;">
-                <!-- Content above the table goes here -->
-                <h2>Editor's Dashboard</h2>
-           
-            <table>
-                <thead>
-                    <tr>
-                        <th>ManusriptNo</th>
-                        <th>Subject</th>
-                        <th>Title</th>
-                        <th>ManuscriptType</th>
-                        <th>Abstract</th>
-                        <th>CreatedOn</th>
-                        <th>Plagiarismurl</th>
-
-                        <th>Undertakingdocurl</th>
-                        <th>Plagiarismdocname</th>
-                        <th>TitleID</th>
-                        <th>ManuscriptType</th>
-                        <th>ManuscriptPDF</th>
-                        <th>UndertakingDocName</th>
-                        <th>ManuscriptPDFName</th>
-                        <th>RegisterID</th>
-
-                        <!-- <h2>Current status:</h2>
+   <form>
+    <div>
+        <div style="text-align: center;">
+            <!-- Content above the table goes here -->
+            <h2>Editor's Dashboard</h2>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ManusriptNo</th>
+                    <th>Author Name</th>
+                    <th>Subject</th>
+                    <th>Title</th>
+                    <th>ManuscriptType</th>
+                    <th>Abstract</th>
+                    <th>Plagiarism Report </th>
+                    <th> Author Undertaking Form</th>
+                    <th>Manuscript Type</th>
+                    <th>Manuscript</th>
+                    <!-- <h2>Current status:</h2>
     <select id="selectstatus">
         <option value="accepted">Accepted</option>
         <option value="for review">For review</option>
@@ -50,7 +29,6 @@
         <option value="sent for Revision">Sent for Revision</option>
         <option value="acceptance communication">Acceptance communication</option>
         <option value="publication">Publication</option>
-    
     </select> -->
 
 
@@ -80,7 +58,7 @@
                     </tr>
                 </tbody>
             </table> </div>
-        </section><br><br>
+        <br><br>
         <section *ngIf="contentView==true">
             <h3 style="text-align: center;">Details of Submitted Manuscript</h3><br>
             <div class="col-md-12 row">
@@ -140,7 +118,49 @@
           </div>          
         <br>
     </section>
-    </main>
-</body>
+  <table>
+            <tbody>
+                <tr *ngFor="let manuscriptcontent of manuscriptcontentList;index as i">
+                    <td>{{ manuscriptcontent.manuscriptNo}}</td>
+                    <td>{{ manuscriptcontent.autorName}}</td>
+                    <td>{{ manuscriptcontent.subject}}</td>
+                    <td>{{ manuscriptcontent.title}}</td>
+                    <td>{{ manuscriptcontent.manuscriptType}}</td>
+                    <td>{{ manuscriptcontent.abstract}}</td>
+                    <td>
+                        <!--  <button class="btn btn-primary"  (click)="ViewDocument(manuscriptcontent, pdftesting)">
+                            View
+                        </button> -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontent, pdftesting)" data-target="#pdftesting">
+                            View Document
+                          </button>
+                    </td>
+                    <td>{{ manuscriptcontent.undertakingdocurl}}</td>
+                    <td>{{ manuscriptcontent.manuscriptType}}</td>
+                    <td>{{ manuscriptcontent.manuscriptPDF}}</td>
+                </tr>
+            </tbody>
+        </table>
+   </form>   
 
-</html>
+    <ng-template class="modal-content"  #pdftesting let-d="dismiss" let-c="dismiss">
+        <div class="modal-header">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span>&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <ngx-doc-viewer [url]="plagiarismurl" viewer="google" style="width:100%; height: 70vh;"></ngx-doc-viewer>
+            <br /><br />
+
+            <div class="col-lg-12 row">
+                <div class="col-lg-5"></div>
+                <div class="col-lg-6">
+                    <a [href]="plagiarismurl"><button class="btn btn-info">
+                            <i class="fa fa-download"></i>Download
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </ng-template>
