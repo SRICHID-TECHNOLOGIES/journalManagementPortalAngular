@@ -32,7 +32,9 @@ export class ManuscriptserviceService {
     return this.http.get('http://localhost:44303/api/Manuscript/FetchManuscriptNumber')
   }
  
-
+  getReviewerList(){
+    return this.http.get('http://localhost:44303/api/Manuscript/getReviewerList')
+  }
 
   getManusubmissionDetailsByRegisterID(id:any){
     return this.http.get('http://localhost:44303/api/Manuscript/GetManuscriptDetailsByRegisterID/'+id)
