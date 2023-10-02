@@ -16,6 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { RoleComponent } from './Masters/Role/role/role.component';
 import { AuthorindividualsubmissionsComponent } from './authorindividualsubmissions/authorindividualsubmissions.component';
+import { ReviewerpageComponent } from './reviewerpage/reviewerpage.component';
 
 const routes: Routes = [
   { path:'subjectcontent', component: SubjectcontentComponent},
@@ -32,7 +33,9 @@ const routes: Routes = [
   { path:'resetpassword', component: PasswordresetComponent},
   { path:'login', component: LoginComponent},
   {path:'rolecomponent' , component:RoleComponent},
-  {path:'authorindividualsubmission' , component:AuthorindividualsubmissionsComponent}
+  {path:'authorindividualsubmission' , component:AuthorindividualsubmissionsComponent},
+  {path:'reviwerpage',component:ReviewerpageComponent},
+  { path: 'reviwerpage/:id', component:ReviewerpageComponent},
 
 ];
 
