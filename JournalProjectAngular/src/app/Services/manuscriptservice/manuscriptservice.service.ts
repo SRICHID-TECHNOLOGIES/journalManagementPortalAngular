@@ -33,6 +33,9 @@ export class ManuscriptserviceService {
     return this.http.get('http://localhost:44303/api/Manuscript/FetchManuscriptNumber')
   }
  
+  getReviewerList(){
+    return this.http.get('http://localhost:44303/api/Manuscript/getReviewerList')
+  }
   FetchAuthorName(){
     return this.http.get('http://localhost:44303/api/Manuscript/FetchAuthorName')
     
