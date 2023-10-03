@@ -17,6 +17,7 @@ export class EditorComponent {
   ViewDoc: any;
   pdfUrl: any;
   FetchAuthorName: any;
+  
   undertakingdocurlismurl:any;
 
   constructor(

@@ -2,10 +2,11 @@
    <form>
     <div>
         <div style="text-align: center;">
-            <!-- Content above the table goes here -->
+            <br>
             <h2>Editor's Dashboard</h2>
         </div>
         <table>
+          
             <thead>
                 <tr>
                     <th>ManusriptNo</th>
@@ -57,31 +58,35 @@
                           </button></td>
                 </tr>
             </tbody>
+     
         </table>
        </div>
    </form>   
 
-    <ng-template class="modal-content"  #pdftesting let-d="dismiss" let-c="dismiss">
-        <div class="modal-header">
-            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                <span>&times;</span>
-            </button>
+
+  <ng-template #pdftesting let-modal>
+  <div class="modal-dialog modal-md"> <!-- Set modal size to medium -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Document Viewer</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <ngx-doc-viewer [url]="plagiarismurl" viewer="google" style="width: 100%; height: 50vh;"></ngx-doc-viewer>
+        <br /><br />
+        <div class="row">
+          <div class="col-lg-5"></div>
+          <div class="col-lg-6">
+            <a [href]="plagiarismurl" target="_blank" rel="noopener noreferrer">
+              <button class="btn btn-info">
+                <i class="fa fa-download"></i> Download
+              </button>
+            </a>
+          </div>
         </div>
-        <div class="modal-body">
-            <ngx-doc-viewer [url]="plagiarismurl" viewer="google" style="width:100%; height: 70vh;"></ngx-doc-viewer>
-
-            <br /><br />
-
-            <div class="col-lg-12 row">
-                <div class="col-lg-5"></div>
-                <div class="col-lg-6">
-                    <a [href]="plagiarismurl"><button class="btn btn-info">
-
-                            <i class="fa fa-download"></i>Download
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-
+      </div>
+    </div>
+  </div>
+</ng-template>

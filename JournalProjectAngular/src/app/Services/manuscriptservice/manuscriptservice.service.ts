@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ManuscriptserviceService {
   public weburl="http://localhost:44303"
+  
 
  
   
@@ -34,7 +35,7 @@ export class ManuscriptserviceService {
   }
  
   FetchAuthorName(){
-    return this.http.get('http://localhost:44303/api/Manuscript/FetchAuthorName')
+    return this.http.get('http://localhost:44303/api/Manuscript/FetchAuthorName"')
     
   }
 
