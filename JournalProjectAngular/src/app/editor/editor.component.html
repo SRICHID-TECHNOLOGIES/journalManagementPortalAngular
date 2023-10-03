@@ -5,7 +5,7 @@
             <br>
             <h2>Editor's Dashboard</h2>
         </div>
-        <table>
+        <table *ngIf=" tableView==true">
           
             <thead>
                 <tr>
@@ -17,8 +17,8 @@
                     <th>Abstract</th>
                     <th>Plagiarism Report </th>
                     <th> Author Undertaking Form</th>
-                 
                     <th>Manuscript</th>
+                    <th>Review</th>
                     <!-- <h2>Current status:</h2>
     <select id="selectstatus">
         <option value="accepted">Accepted</option>
@@ -38,7 +38,7 @@
                     <tbody>
                         <tr *ngFor="let manuscriptcontent of manuscriptcontentList;index as i">
                             <td>{{ manuscriptcontent.manuscriptNo}}</td>
-                            <td>{{ manuscriptcontent.autorName}}</td>
+                            <td>{{ manuscriptcontent.authorName}}</td>
                             <td>{{ manuscriptcontent.subject}}</td>
                             <td>{{ manuscriptcontent.title}}</td>
                             <td>{{ manuscriptcontent.manuscriptType}}</td>
@@ -51,9 +51,13 @@
                                     View Document
                                   </button>
                             </td>
-                            <td>{{ manuscriptcontent.undertakingdocurl}}</td>
-                            <td>{{ manuscriptcontent.manuscriptType}}</td>
-                            <td>{{ manuscriptcontent.manuscriptPDF}}</td>
+                            <td> <button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontent, pdftesting)" data-target="#pdftesting">
+                              View Document
+                            </button></td>
+                        
+                            <td> <button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontent, pdftesting)" data-target="#pdftesting">
+                              View Document
+                            </button></td>
                         <td><button class="btn-primary" (click)="getmanuscriptcontentdata(manuscriptcontent)">Review</button></td>
                     </tr>
                 </tbody>

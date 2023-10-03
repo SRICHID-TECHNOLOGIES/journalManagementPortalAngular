@@ -94,7 +94,7 @@ export class RegisterComponent {
         .registration(registrationData)
         .subscribe((result: any) => {
           if (result == 'success') {
-            alert('Saved successfully');
+            alert('Registered successfully');
             window.location.reload();
           } else {
             alert('Somthing went wrong!!!');
