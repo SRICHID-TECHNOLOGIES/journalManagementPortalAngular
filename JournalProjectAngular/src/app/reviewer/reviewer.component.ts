@@ -9,7 +9,9 @@ export class ReviewerComponent {
   showTable2: boolean = false;
 
   toggleTable2() {
-    this.showTable2 = !this.showTable2;
+
+    
+   // this.showTable2 = !this.showTable2;
   }
 
 }

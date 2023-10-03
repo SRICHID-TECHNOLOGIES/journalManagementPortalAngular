@@ -4,14 +4,14 @@
   
          </nav>
 
-        
+      
         <div class="topnav">
           <a href="/home">Home</a>
           <a href="#about">About</a>
           <a href="/footer">Contact</a>
           <a href="/register">Register</a>
-          <!-- Registration and User-specific links -->
-          <ng-container *ngIf="IsLoggedIn">
+         
+           <ng-container *ngIf="IsLoggedIn">
                
               <a *ngIf="RoleID == 1003 || RoleID == 2" [routerLink]="['/manuscriptsubmission']">Submit Manuscript</a>
               <a *ngIf="RoleID == 1003" [routerLink]="['/authorindividualsubmission']">Dashboard</a>
@@ -30,10 +30,9 @@
                   </div>
                 </a>
               
-          </ng-container>
+          </ng-container> 
       
-          <!-- Login link -->
-          <a *ngIf="!IsLoggedIn" [routerLink]="['/login']">Login</a>
-      </div>
-      
+           <a *ngIf="!IsLoggedIn" [routerLink]="['/login']">Login</a>
+      </div> 
+       
       

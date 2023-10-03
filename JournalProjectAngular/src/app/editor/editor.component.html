@@ -31,37 +31,98 @@
         <option value="acceptance communication">Acceptance communication</option>
         <option value="publication">Publication</option>
     </select> -->
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let manuscriptcontent of manuscriptcontentList;index as i">
-                    <td>{{ manuscriptcontent.manuscriptNo}}</td>
-                    <td>{{ manuscriptcontent.authorName}}</td>
-                    <td>{{ manuscriptcontent.subject}}</td>
-                    <td>{{ manuscriptcontent.title}}</td>
-                    <td>{{ manuscriptcontent.manuscriptType}}</td>
-                    <td>{{ manuscriptcontent.abstract}}</td>
-                    <td>
-                        <!--  <button class="btn btn-primary"  (click)="ViewDocument(manuscriptcontent, pdftesting)">
-                            View
-                        </button> -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontent, pdftesting)" data-target="#pdftesting">
-                            View Document
-                          </button>
-                    </td>
-                    <td><button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontent, pdftesting)" data-target="#pdftesting">
-                        View Document
-                      </button></td>
-                   
-                    <td><button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontent, pdftesting)" data-target="#pdftesting">
-                            View Document
-                          </button></td>
-                </tr>
-            </tbody>
-     
-        </table>
-       </div>
-   </form>   
+
+
+                    </tr>
+                </thead>
+                    <tbody>
+                        <tr *ngFor="let manuscriptcontent of manuscriptcontentList;index as i">
+                            <td>{{ manuscriptcontent.manuscriptNo}}</td>
+                            <td>{{ manuscriptcontent.autorName}}</td>
+                            <td>{{ manuscriptcontent.subject}}</td>
+                            <td>{{ manuscriptcontent.title}}</td>
+                            <td>{{ manuscriptcontent.manuscriptType}}</td>
+                            <td>{{ manuscriptcontent.abstract}}</td>
+                            <td>
+                                <!--  <button class="btn btn-primary"  (click)="ViewDocument(manuscriptcontent, pdftesting)">
+                                    View
+                                </button> -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontent, pdftesting)" data-target="#pdftesting">
+                                    View Document
+                                  </button>
+                            </td>
+                            <td>{{ manuscriptcontent.undertakingdocurl}}</td>
+                            <td>{{ manuscriptcontent.manuscriptType}}</td>
+                            <td>{{ manuscriptcontent.manuscriptPDF}}</td>
+                        <td><button class="btn-primary" (click)="getmanuscriptcontentdata(manuscriptcontent)">Review</button></td>
+                    </tr>
+                </tbody>
+            </table> </div>
+        <br><br>
+        <section *ngIf="contentView==true">
+            <h3 style="text-align: center;">Details of Submitted Manuscript</h3><br>
+            <div class="col-md-12 row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">   <p>Manusript No: <b>{{ manuscriptNo }}</b> </p></div>
+             <div class="col-md-4">  <p>Manuscript Type: <b>{{ manuscriptType }}</b></p></div> 
+             <div class="col-md-3">  <p>Created On: <b>{{ createdOn | date }}</b></p></div></div>
+             <div class="col-md-12 row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3"><p>Plagiarism Document Name: <b>{{plagiarismdocname }}</b></p></div>
+                <div class="col-md-4"> <p>ManuscriptType: <b>{{ manuscriptType }}</b></p></div>
+                <div class="col-md-3"><p>Undertaking Document Name: <b>{{ undertakingDocName }}</b></p></div></div>
+                <div class="col-md-12 row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3"> <p>Manuscript Name: <b>{{ manuscriptPDFName }} </b></p></div><div class="col-md-8"></div></div>
+           <div class="col-md-12 row">
+           <div class="col-md-5"></div>
+           <div class="col-md-2"> <button type="button" class="btn btn-primary" (click)="getreviewersList()">Send to Review</button></div>
+           <div class="col-md-5"></div>
+        </div> 
+             
+            <br> 
+            
+        </section>
+        <section *ngIf="reviewerView==true">
+        <div class="col-md-12 row">
+            <div class="col-md-2"></div>
+            <div class="form-group, col-md-2">
+                <label>Reviewer 1</label>
+                <select  (change)="onSelectReviewer1($event)" class="form-control">
+                  <option value="">Select An Option</option>
+                  <option *ngFor="let data1 of reviewerList" [value]=data1.registerID
+                    [disabled]="data1.registerID == reviewer2 || data1.registerID == reviewer3">
+                    {{data1.fullName}}
+                  </option>
+                </select>
+              </div><div class="col-md-1"></div>
+              <div class="form-group, col-md-2">
+                <label>Reviewer 2</label>
+                <select  (change)="onSelectReviewer2($event)" class="form-control">
+                  <option value="">Select An Option</option>
+                  <option *ngFor="let data2 of reviewerList" [value]=data2.registerID
+                    [disabled]="data2.registerID == reviewer1 || data2.registerID == reviewer3">
+                    {{data2.fullName}}
+                  </option>
+                </select>
+              </div><div class="col-md-1"></div>
+              <div class="form-group, col-md-2">
+                <label>Reviewer 3</label>
+                <select  (change)="onSelectReviewer3($event)" class="form-control">
+                  <option value="">Select An Option</option>
+                  <option *ngFor="let data3 of reviewerList" [value]=data3.registerID
+                    [disabled]="data3.registerID == reviewer1 || data3.registerID == reviewer2">
+                    {{data3.fullName}}
+                  </option>
+                </select>
+              </div>
+        </div><br><div style="text-align: center;">
+            <button type="button" class="btn btn-primary" (click)="selectedReviewers()">Share with reviewers</button>
+          </div>          
+        <br>
+    </section>
+  
+           
 
 
   <ng-template #pdftesting let-modal>

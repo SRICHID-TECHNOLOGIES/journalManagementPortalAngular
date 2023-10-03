@@ -11,7 +11,7 @@ export class ManuscriptserviceService {
 
  
   
-  constructor(private http:HttpClient,) { }
+  constructor(private http:HttpClient) { }
 
   postsavedata(id:any): any{
     return this.http.post(this.weburl+"api/Manuscript/Fileupload",id) 
@@ -34,12 +34,18 @@ export class ManuscriptserviceService {
     return this.http.get('http://localhost:44303/api/Manuscript/FetchManuscriptNumber')
   }
  
+  getReviewerList(){
+    return this.http.get('http://localhost:44303/api/Manuscript/getReviewerList')
+  }
   FetchAuthorName(){
     return this.http.get('http://localhost:44303/api/Manuscript/FetchAuthorName"')
     
   }
 
-
+  saveReviewers(reviewerData:any){
+    return this.http.post('http://localhost:44303/api/ReviewSubmission/saveReviewers', reviewerData)
+  }
+  
   getManusubmissionDetailsByRegisterID(id:any){
     return this.http.get('http://localhost:44303/api/Manuscript/GetManuscriptDetailsByRegisterID/'+id)
   }
