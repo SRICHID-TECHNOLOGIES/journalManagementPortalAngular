@@ -16,6 +16,7 @@ export class LoginComponent {
   route: any;
   getlogin: any;
   userName: any;
+  roleName: any;
   
   constructor(private  Services:LoginserviceService ,private router:Router){
     if(localStorage.getItem("IsLoggedIn") == "true"){
@@ -25,7 +26,7 @@ export class LoginComponent {
       this.RoleID = localStorage.getItem("RoleID")
     this.userName=localStorage.getItem("UserName")
 
-    
+    this.roleName=localStorage.getItem("roleName")
   }
   
    }
@@ -58,7 +59,7 @@ export class LoginComponent {
         localStorage.setItem('UserName', result.fullName);
         localStorage.setItem('RoleID', result.roleID);
         localStorage.setItem('RegisterID', result.registerID);
-        
+      
         localStorage.setItem('IsLoggedIn', 'true');
         this.router.navigate(['/home']).then(()=>{
           window.location.reload()

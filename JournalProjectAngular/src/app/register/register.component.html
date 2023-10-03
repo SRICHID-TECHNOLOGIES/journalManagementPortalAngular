@@ -27,24 +27,26 @@
                     <div class="form-group">
                         <label style="font-size: larger;"  for="Profession">Profession:</label>
                         <input type="text" class="form-control" id="Profession" [(ngModel)]="Profession" required>
-                       <br> <br>
                        
                        
-                        <div class="form-group">
-                            <label style="font-size: larger;" for="role"   class  >Role Name:</label>
-                           
-                        
-                            <select (change)="onselectrole($event)" id="role" name="RoleNames">
-                               <option> select option</option> 
-                               <option *ngFor="let data of roleList" [value]=data.roleID> {{data.roleName}}</option>
-                               
-
-                              </select>
-                        
-                           
-                            
-                        </div>
+                       
+                      
                     </div>
+
+
+                  
+                    <div  *ngIf="IsLoggedIn" class="form-group">
+                        <label for="Role">Role Name:</label>
+                        <select (change)="onselectrole($event)" class="form-control">
+                            <option>Select An Option</option>
+                            <option *ngFor="let data of roleList" [value]="data.roleID">{{ data.roleName }}
+                            </option>
+                        </select>
+                    </div>
+                      
+                 
+
+
                     <div class="form-group">
                         <label style="font-size: larger;"  for="Organisation">Organisation:</label>
                         <input type="text" class="form-control" id="Organisation" [(ngModel)]="Organisation">

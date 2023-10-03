@@ -9,6 +9,19 @@ import { RoleService } from '../Services/role/role.service';
 })
 export class RegisterComponent {
 
+
+  IsLoggedIn: boolean = false; // Set this to true or false based on your login state
+  roleList: any[] = [
+    { roleID: 1, roleName: 'Role 1' },
+    { roleID: 2, roleName: 'Role 2' },
+    { roleID: 3, roleName: 'Role 3' }
+    // Add more roles as needed
+  ];
+
+  onselectrole1(event: any) {
+    // Handle the selection change here
+    console.log(event.target.value);
+  }
   registration:any;
   registrationtList: any = [];
   selectedregisteredID:any;
@@ -31,10 +44,19 @@ export class RegisterComponent {
   
   userPassword: any;
     passwordsMatch: any;
-    roleList: any=[];
+
     selectedrole: any;
-    rolename: any;
-  
+
+
+  roleName:any ;
+  route: any;
+
+  RoleID: any;
+  email: any;
+
+// Set this based on your authentication logic
+  roleList1: any[] = [ /* Define your role data here */ ];
+  selectedRole: any;
   
   constructor(
     private Services : RegisterService,
@@ -43,17 +65,35 @@ export class RegisterComponent {
    )
    {
    
+    if(localStorage.getItem("IsLoggedIn") === "false"){
+      this.IsLoggedIn = false;
+
+      this.email = localStorage.getItem("Email");
+      this.RoleID = localStorage.getItem("RoleID");
+      this.roleName = localStorage.getItem("roleName");
+      
+
+    }
+
+
+    else if(localStorage.getItem("IsLoggedIn") === "true"){
+      this.IsLoggedIn = true;
+    }
   }
+
+ 
   ngOnInit() {
     this.getregistration();
     this.getrole();
   }
+
+
   registerregistration() {
   
     if(this.Password != this.ConfirmPassword){
       alert("password does not match")
     }
-   else if(this.Email == null || this.Email == undefined){
+   else if(this.Email == null || this.Email == undefined){23
       alert("Please enter the emailid")
     }
     else if(this.FullName == null || this.FullName == undefined){
@@ -62,9 +102,7 @@ export class RegisterComponent {
     else if(this.Phone == null || this.Phone == undefined){
       alert("Please enter the PHONE NUMBER")
     }
-    else if(this.Phone == null || this.Phone == undefined){
-      alert("Please enter the PHONE NUMBER")
-    }
+   
     else if(this.Profession== null || this.Profession == undefined){
       alert("Please enter the Profession")
     }
@@ -91,9 +129,17 @@ export class RegisterComponent {
       alert("Please enter the Pincode")
     }
    
-    
   
+    
+
     else{
+
+      if (this.IsLoggedIn==false )
+      {
+          this.roleName = "Author";
+          this.selectedrole =2005// Set the role to "Author" by default
+      }
+      
       var registrationData = {
       
         FullName: this.FullName,
@@ -107,7 +153,7 @@ export class RegisterComponent {
         City :this.City ,
         State:this.State,
         Pincode:this.Pincode,
-        RoleName:this.rolename,
+        RoleName:this.roleName,
         RoleID:this.selectedrole,
         
          Password:this.Password,
@@ -115,7 +161,7 @@ export class RegisterComponent {
       }
       this.registersv.registration(registrationData).subscribe((result: any) => {
         if (result == "success") {
-          alert("Saved successfully");
+          alert("Registered successfully");
           window.location.reload();
         } else {
           alert("Somthing went wrong!!!")
@@ -125,6 +171,9 @@ export class RegisterComponent {
       })
     }
   
+
+
+
   }
   getregistration() {
     this.registersv.getregistrationData().subscribe((result: any) => {
@@ -134,6 +183,9 @@ export class RegisterComponent {
       
     })
   }
+
+
+  
   getrole() {
       this.services.getroleData().subscribe((result: any) => {
         this.roleList = result;
@@ -146,7 +198,7 @@ export class RegisterComponent {
      for(var i =0; i<this.roleList.length; i++ ){
   
       if( this.roleList[i].roleID == this.selectedrole){
-         this.rolename = this.roleList[i].roleName;
+         this.roleName = this.roleList[i].roleName;
       }
   
   
