@@ -68,8 +68,24 @@ tr:hover {
 .dropdown:hover .dropdown-content {
     display: block;
 }
-/* Adjust the z-index of the modal backdrop */
-.modal-backdrop.show {
-z-index: 0000;
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
 }
-  
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}

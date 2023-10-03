@@ -39,7 +39,9 @@ export class EditorComponent {
   closeResult: string | undefined; // Declare closeResult property
   ViewDoc: any;
   pdfUrl: any;
-
+  FetchAuthorName: any;
+  
+  undertakingdocurlismurl:any;
 
   constructor(
     private Services: ManuscriptserviceService,
@@ -48,7 +50,8 @@ export class EditorComponent {
   ) {}
   
   ngOnInit() {
-    this.getmanuscriptcontent();
+    this.getmanuscriptcontent(); 
+    this.getAuthorName();
   }
 
   getmanuscriptcontent() {
@@ -56,6 +59,12 @@ export class EditorComponent {
       this.manuscriptcontentList = result;
       console.log(this.manuscriptcontentList);
     });
+  }
+  getAuthorName() {
+    this.Services.FetchAuthorName().subscribe((result: any) => {
+      this.manuscriptcontentList = result;
+      console.log(this.manuscriptcontentList);
+    })
   }
 
   getmanuscriptcontentdata(data: any) {
@@ -75,9 +84,35 @@ export class EditorComponent {
     this.manuscriptPDFName = data.manuscriptPDFName;
     this.registerID = data.registerID;
 
-     this.contentView=true
-     this.tableView=false
-     this.reviewerView=false
+    this.contentView=true
+    this.tableView=false
+    this.reviewerView=false
+  }
+
+  selectedReviewers(){
+    var reviewerData = {
+      Reviewer1 : this.reviewer1,
+      Reviewer2 : this.reviewer2,
+      Reviewer3 : this.reviewer3,
+      manuscriptNo: this.manuscriptNo,
+      subject: this.subject,
+      title: this.title,
+      createdOn : this.createdOn,
+      manuscriptPDFName : this.manuscriptPDFName,
+      manuscriptPDF : this.manuscriptPDF,
+      undertakingdocurl: this.undertakingdocurl,
+      plagiarismurl: this.plagiarismurl
+    } 
+    this.Services.saveReviewers(reviewerData).subscribe((result: any) => {
+      if (result == "success") {
+        alert("Saved successfully");
+        window.location.reload();
+      } else {
+        alert("Somthing went wrong!!!")
+        window.location.reload();
+
+      }
+    })
   }
 
   getreviewersList() {
@@ -105,12 +140,7 @@ export class EditorComponent {
       alert("Reviewer is already selected");
     }else{
       this.reviewer3 = parseInt(data.target.value);
-    }
-    
-  }
-
-  selectedReviewers(){
-
+    }    
   }
 
 
@@ -129,5 +159,6 @@ export class EditorComponent {
       });
     }
   }
+ 
+  }
 
-}

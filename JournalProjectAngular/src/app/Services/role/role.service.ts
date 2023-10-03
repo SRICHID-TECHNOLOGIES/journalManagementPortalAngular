@@ -13,17 +13,16 @@ export class RoleService {
     constructor(private http:HttpClient) { }
   
     saverole(roleData: any) {
-      return this.http.post('http://localhost:44303/api/Role/Saverole', roleData)
+      return this.http.post('http://localhost:44303/api/role/Saverole', roleData)
     }
     getroleData() {
-    
-      return this.http.get('http://localhost:44303/api/Role/GetroleData')
+      return this.http.get('http://localhost:44303/api/role/GetroleData')
     }
     Editrole(data:any) {
-      return this.http.post('http://localhost:44303/api/Role/Editrole', data)
+      return this.http.post('http://localhost:44303/api/role/Editrole', data)
     }
     Deleterole(id:any) {
-      return this.http.get('http://localhost:44303/api/Role/deleteroleData/' + id)
+      return this.http.get('http://localhost:44303/api/role/deleteroleData/' + id)
     
     }
 }

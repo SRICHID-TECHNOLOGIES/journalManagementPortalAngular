@@ -5,43 +5,27 @@ import { RoleService } from '../Services/role/role.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-
-
-  IsLoggedIn: boolean = false; // Set this to true or false based on your login state
-  roleList: any[] = [
-    { roleID: 1, roleName: 'Role 1' },
-    { roleID: 2, roleName: 'Role 2' },
-    { roleID: 3, roleName: 'Role 3' }
-    // Add more roles as needed
-  ];
-
-  onselectrole1(event: any) {
-    // Handle the selection change here
-    console.log(event.target.value);
-  }
-  registration:any;
+  registration: any;
   registrationtList: any = [];
-  selectedregisteredID:any;
+  selectedregisteredID: any;
   FullName: any;
-  ConfirmPassword:any
-  Phone:any;
-  Email:any;
-  Profession :any;
-  Organisation:any;
-  College:any;
-  PostalAddress :any;
-  Area:any;
-  City :any;
-  State:any;
-  Role:any
-  Pincode:any;
-  Password:any;
-  
-  
-  
+  ConfirmPassword: any;
+  Phone: any;
+  Email: any;
+  Profession: any;
+  Organisation: any;
+  College: any;
+  PostalAddress: any;
+  Area: any;
+  City: any;
+  State: any;
+  Role: any;
+  Pincode: any;
+  Password: any;
+
   userPassword: any;
     passwordsMatch: any;
 
@@ -57,6 +41,7 @@ export class RegisterComponent {
 // Set this based on your authentication logic
   roleList1: any[] = [ /* Define your role data here */ ];
   selectedRole: any;
+  IsLoggedIn: boolean=false;
   
   constructor(
     private Services : RegisterService,
@@ -76,10 +61,13 @@ export class RegisterComponent {
     }
 
 
-    else if(localStorage.getItem("IsLoggedIn") === "true"){
-      this.IsLoggedIn = true;
-    }
+    
   }
+
+ 
+  roleList: any = [];
+
+  rolename: any;
 
  
   ngOnInit() {
@@ -141,9 +129,8 @@ export class RegisterComponent {
       }
       
       var registrationData = {
-      
         FullName: this.FullName,
-        Phone:this.Phone,
+        Phone: this.Phone,
         Email: this.Email,
         Profession :this.Profession,
         Organisation:this.Organisation,
@@ -179,9 +166,7 @@ export class RegisterComponent {
     this.registersv.getregistrationData().subscribe((result: any) => {
       this.registrationtList = result;
       console.log(this.registrationtList);
-  
-      
-    })
+    });
   }
 
 
@@ -200,9 +185,7 @@ export class RegisterComponent {
       if( this.roleList[i].roleID == this.selectedrole){
          this.roleName = this.roleList[i].roleName;
       }
-  
-  
-     }
-  
     }
+  }
 }
+    

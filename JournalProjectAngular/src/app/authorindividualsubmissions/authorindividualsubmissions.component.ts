@@ -44,7 +44,7 @@ export class AuthorindividualsubmissionsComponent {
   
 
   ngOnInit() {
-    this.getManuscriptDetailsByRegisterid(); 
+    this.getManusubmissionDetailsByRegisterID(); 
     this.getAuthorName();
 
     
@@ -57,7 +57,7 @@ export class AuthorindividualsubmissionsComponent {
     })
   }
  
-  getManuscriptDetailsByRegisterid() {
+  getManusubmissionDetailsByRegisterID() {
     this.manuscriptService.getManusubmissionDetailsByRegisterID( this.RegisterID).subscribe((result: any) => {
       this.manuscriptcontentList = result;
       console.log(this.manuscriptcontentList);

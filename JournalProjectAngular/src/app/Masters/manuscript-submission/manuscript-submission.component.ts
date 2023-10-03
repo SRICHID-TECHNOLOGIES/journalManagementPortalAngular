@@ -43,6 +43,7 @@ export class ManuscriptSubmissionComponent {
       this.RoleID = localStorage.getItem("RoleID")
     this.userName=localStorage.getItem("UserName")
     this.RegisterID=localStorage.getItem("RegisterID")
+    
 
     
   }
