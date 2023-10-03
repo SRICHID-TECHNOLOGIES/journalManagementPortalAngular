@@ -41,6 +41,9 @@ export class RegisterComponent {
     this.getregistration();
     this.getrole();
   }
+
+
+
   registerregistration() {
     if (this.Password != this.ConfirmPassword) {
       alert('password does not match');

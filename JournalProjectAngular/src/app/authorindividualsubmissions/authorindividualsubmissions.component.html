@@ -8,7 +8,7 @@
             <!-- Content above the table goes here -->
             <h2>Author's Dashboard</h2>
         </div>
-            <table>
+            <table> 
                 <thead>
                     <tr>
                         <th>ManusriptNo</th>
@@ -33,16 +33,8 @@
                 <tbody>
                     
 
-
-
-
-
-
-
-
 <tr *ngFor="let manuscriptcontentList of manuscriptcontentList;index as i">
     <td>{{ manuscriptcontentList.manuscriptNo}}</td>
-    
     <td>{{ manuscriptcontentList.authorName}}</td>
     <td>{{ manuscriptcontentList.subject}}</td>
     <td>{{ manuscriptcontentList.title}}</td>
@@ -52,16 +44,11 @@
     <td><button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontentList, pdftesting)" data-target="#pdftesting">
         View Document
       </button></td>
-    
-
-        <td>
-           
+        <td>           
             <button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontentList, pdftesting)" data-target="#pdftesting">
                 View Document
               </button>
         </td>
-       
-       
         <td><button type="button" class="btn btn-primary" data-toggle="modal" (click)="ViewDocument(manuscriptcontentList, pdftesting)" data-target="#pdftesting">
             View Document
           </button></td>
@@ -94,22 +81,3 @@
 </div>
 </div>
 </ng-template>
-
-          
-
-       
-       
-        
-                
-       
-        <!-- Add more rows as needed -->
-
-
-
-
-
-
-
-
-
-

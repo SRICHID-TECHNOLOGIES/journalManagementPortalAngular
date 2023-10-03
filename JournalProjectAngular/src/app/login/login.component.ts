@@ -24,6 +24,7 @@ export class LoginComponent {
       this.email = localStorage.getItem("Email")
       this.RoleID = localStorage.getItem("RoleID")
     this.userName=localStorage.getItem("UserName")
+    
 
     
   }

@@ -39,7 +39,9 @@ export class EditorComponent {
   closeResult: string | undefined; // Declare closeResult property
   ViewDoc: any;
   pdfUrl: any;
-
+  FetchAuthorName: any;
+  
+  undertakingdocurlismurl:any;
 
   constructor(
     private Services: ManuscriptserviceService,
@@ -48,7 +50,8 @@ export class EditorComponent {
   ) {}
   
   ngOnInit() {
-    this.getmanuscriptcontent();
+    this.getmanuscriptcontent(); 
+    this.getAuthorName();
   }
 
   getmanuscriptcontent() {
@@ -56,6 +59,12 @@ export class EditorComponent {
       this.manuscriptcontentList = result;
       console.log(this.manuscriptcontentList);
     });
+  }
+  getAuthorName() {
+    this.Services.FetchAuthorName().subscribe((result: any) => {
+      this.manuscriptcontentList = result;
+      console.log(this.manuscriptcontentList);
+    })
   }
 
   getmanuscriptcontentdata(data: any) {
@@ -150,5 +159,6 @@ export class EditorComponent {
       });
     }
   }
+ 
+  }
 
-}
