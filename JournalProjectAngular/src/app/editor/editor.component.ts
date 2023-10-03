@@ -90,8 +90,9 @@ export class EditorComponent {
       title: this.title,
       createdOn : this.createdOn,
       manuscriptPDFName : this.manuscriptPDFName,
-      manuscriptPDF : this.manuscriptPDF
-
+      manuscriptPDF : this.manuscriptPDF,
+      undertakingdocurl: this.undertakingdocurl,
+      plagiarismurl: this.plagiarismurl
     } 
     this.Services.saveReviewers(reviewerData).subscribe((result: any) => {
       if (result == "success") {
