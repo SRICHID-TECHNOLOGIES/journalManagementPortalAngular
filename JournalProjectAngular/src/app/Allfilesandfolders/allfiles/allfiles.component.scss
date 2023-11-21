@@ -1,0 +1,127 @@
+#listselect {
+    width: auto;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #002;
+    font-size: auto;
+
+    outline: none;
+    cursor: pointer;
+    height: auto;
+}
+
+.container {
+    margin-top: 30px;
+    max-width: 500px;
+}
+
+.ddinfo {
+    display: block;
+    text-align: center;
+    padding-top: 130px;
+    color: #a0a1a2;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Inconsolata:700&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+tbody {
+    // height: 88vh;
+    overflow-y: scroll;
+}
+
+thead,
+tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.fileUploadWrapper .card-body {
+    max-height: 330px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+    .container {
+        width: 280px;
+        margin: 20px auto 100px;
+    }
+}
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+
+.dropdown-item:hover {
+    color: #1e5ee5;
+    cursor: pointer;
+}
+
+.fileupload {
+    // background-image: url(./../../../assets/img/upload-icon.png);
+    background-repeat: no-repeat;
+    background-size: 100px;
+    background-position: center;
+    background-color: #ffffff;
+    height: 200px;
+    width: 100%;
+    cursor: pointer;
+    /* border: 2px dashed #0f68ff; */
+    border-radius: 6px;
+    margin-bottom: 25px;
+    background-position: center 28px;
+}
+
+.dropdown-menu.show {
+    padding-bottom: 24px;
+}
+
+.fa-stack {
+    line-height: 0;
+}
+
+// ------------------------------
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+
+.modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+}

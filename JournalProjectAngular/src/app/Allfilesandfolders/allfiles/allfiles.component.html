@@ -1,0 +1,4453 @@
+<ngx-spinner></ngx-spinner>
+<!-- Search -->
+
+<div class="col-md-12 row" *ngIf="SearchEnabled" style="padding: 0; margin-top: 54px; margin-left: 0; margin-right: 0;">
+    <div class="col-md-12 row" style="padding: 0; margin-left: 0; margin-right: 0;">
+        <div class="col-md-2" id="treeview" *ngIf="!mobile" style="
+        background-color: #33383e;
+        height: 93vh;
+        margin-top: -5px;
+        z-index: 1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      ">
+            <br />
+
+            <div *ngIf="ppopup" style="margin-left: 20px;">
+                <div *ngFor="let a of SearchResult.folders" id="{{ a.folderID }}" style="
+            white-space: nowrap;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white;
+          ">
+                    <span><i
+              class="fa fa-caret-right"
+              (click)="getfolders1(a)"
+              id="{{ a.id }}"
+              style="cursor: pointer;"
+            ></i
+            >&nbsp;
+            <img
+              width="30px"
+              height="30px"
+              src="./assets/img/folder.png"
+              (click)="GetSubfolder(a)"
+              style="cursor: pointer;"
+            />
+            <span
+              (click)="GetSubfolder(a)"
+              style="cursor: pointer; color: white; letter-spacing: 1.5px;"
+              title="{{ a.folderName }}"
+              >&nbsp;{{ a.folderName }}</span
+            ></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col-md-2"
+      *ngIf="mobile"
+      style="border-bottom: #555555 1px solid;"
+    >
+      <div style="width: 100%;">
+        <div style="width: 100%;">
+          <!-- <i class="fa fa-bars" (click)="treeviewba()"> </i> -->
+          <span
+            data-toggle="modal"
+            data-target="#exampleModal"
+            style="
+              z-index: 100;
+              border: none;
+              background: transparent;
+              display: block;
+              font-size: 16px;
+            "
+            (click)="openmodal()"
+          >
+            <br />
+            Upload Object
+          </span>
+                    <label style="
+              z-index: 100;
+              font-size: 16px;
+              border: none;
+              background: transparent;
+              display: block;
+            ">
+            <!-- <b
+              class="temp-upload-icon"
+              for="excel-upload"
+              style="cursor: pointer; padding: 0px;"
+            >
+              <br />
+              Upload Folder</b
+            > -->
+
+            <input
+              type="file"
+              #folderInput
+              id="excel-upload"
+              multiple="true"
+              style="display: none;"
+              (change)="filesPicked(folderInput.files)"
+              webkitDirectory
+            />
+            <!-- <i *ngIf="mobile" class="fa fa-bars" (click)="uploadview()" style="margin-left: 90%;"> </i> -->
+          </label>
+                </div>
+                <div style="width: 40%; float: right;">
+                    <div id="moveid">
+                        <button type="button" id="moveid" class="btn" style="padding: 7px; cursor: pointer;" (click)="MoveDash1()">
+              Move Here
+            </button>
+                        <span (click)="cancel()" style="margin-top: 10px; cursor: pointer;"><i
+                class="fa fa-window-close"
+                title="Cancel"
+                style="cursor: pointer; padding: 7px; font-size: 1.5em;"
+              ></i
+            ></span>
+                        <br />
+                    </div>
+
+                    <div style="border: none; background: transparent; display: block;" (click)="addSubFolder('allSubFolders', subfoldercontent)">
+                        <b class="temp-upload-icon" for="excel-upload" style="cursor: pointer; padding: 0px;" (click)="addSubFolder(allSubFolders, subfoldercontent)">&nbsp;Create Sub Folder</b
+            >
+          </div>
+          <div *ngIf="role == 1"
+            style="border: none; background: transparent; display: block;"
+            
+          >
+            <b
+              class="temp-upload-icon"
+              for="excel-upload"
+              style="cursor: pointer; padding: 0px;"
+             
+              >&nbsp;Add New Client</b
+            >
+          </div>
+         
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10 row text-center" style="padding: 0;">
+      <div
+        class="col-md-9 row"
+        style="
+          border-bottom: #545353 1px solid;
+          height: 30px;
+          margin-top: 10px;
+          padding: 0;
+          padding-left: 15px;
+        "
+      >
+        <i class="fa fa-folder" style="color: orange;"></i
+        ><span style="cursor: pointer;" [routerLink]="['/allfolders']">&nbsp;My Objects&nbsp;
+        </span>
+      </div>
+        <div class="col-md-3">
+          <input type="text" autofocus class="form-control" placeholder="Search..."  [(ngModel)]="val">
+       </div>
+      
+
+      <div
+        class="col-md-9 row"
+        style="
+          padding: 0;
+          height:88vh;
+          overflow-y: scroll;
+          display: inline-block;
+          vertical-align: top;
+        "
+      >
+        <div class="col-md-12 text-right" style="height: 20px;">
+          <i
+            class="fa fa-bars"
+            aria-hidden="true"
+            style="cursor: pointer; color: orange;"
+            title="List View"
+            (click)="gridview(0)"
+          ></i>
+          &nbsp;&nbsp;<i
+            class="fa fa-th"
+            style="cursor: pointer; color: orange;"
+            (click)="gridview(1)"
+            aria-hidden="true"
+            title="Grid View"
+          ></i>
+        </div>
+        <table class="table">
+          <thead style="color: #33383e;">
+            <!-- <th *ngIf="shareitem"><i class="fa fa-times" style="font-size: 33px;color: red;margin-left: -13px;" (click)="CancelShare()"></i></th>
+                    <th *ngIf="deleteitem"><i class="fa fa-times" style="font-size: 33px;color: red;margin-left: -13px;" (click)="CancelDelete()"></i></th> -->
+            <th *ngIf="mob"></th>
+            <th *ngIf="!mob" style="width: 20px;"></th>
+            <th
+              *ngIf="mob"
+              style="font-weight: bold; cursor: pointer;"
+              (click)="sortby()"
+            >
+              Name
+              <span class="fa fa-stack">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+              </span>
+            </th>
+            <th
+              *ngIf="!mob"
+              style="font-weight: bold; cursor: pointer; width: 60%;"
+              (click)="sortby()"
+            >
+              Name
+              <span class="fa fa-stack">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+              </span>
+            </th>
+            <th
+              style="font-weight: bold; cursor: pointer;"
+              *ngIf="mob"
+              (click)="sortbydate()"
+            >
+              Modified
+              <span class="fa fa-stack">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+              </span>
+            </th>
+            <th style="font-weight: bold;" *ngIf="mob">Type</th>
+            <th style="font-weight: bold;">Setting</th>
+
+            <!-- <th>Delete</th> -->
+          </thead>
+          <tbody *ngFor="let folderview of SearchResult.folders">
+            <tr>
+              <td *ngIf="mob" style="text-align: center;">
+                <input
+                  type="checkbox"
+                  (click)="toggleSelect(folderview)"
+                  style="height: 16px; width: 16px; cursor: pointer;"
+                />
+              </td>
+              <td *ngIf="!mob" style="text-align: center; width: 20px;">
+                <input
+                  type="checkbox"
+                  (click)="toggleSelect(folderview)"
+                  style="height: 16px; width: 16px; cursor: pointer;"
+                />
+              </td>
+              <td
+                *ngIf="mob"
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+              >
+                <i class="fa fa-folder" style="color: orange;"></i> &nbsp;&nbsp;
+                <span
+                  (click)="GetSubfolder(folderview)"
+                  style="cursor: pointer;"
+                  title="{{ folderview.folderName }}"
+                  >{{ folderview.folderName }}</span
+                >
+              </td>
+              <td
+                *ngIf="!mob"
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+              >
+                <i class="fa fa-folder" style="color: orange;"></i> &nbsp;&nbsp;
+                <span
+                  (click)="GetSubfolder(folderview)"
+                  style="cursor: pointer;"
+                  title="{{ folderview.folderName }}"
+                  >{{ folderview.folderName }}</span
+                >
+              </td>
+              <td *ngIf="mob">{{ folderview.createdOn | date: "short" }}</td>
+              <td *ngIf="mob">Object Folder</td>
+
+              <!-- <td><input class="delete btn btn-danger" type="button" value="Delete" (click)="Delete(folderview)" />
+                </td> -->
+              <td *ngIf="!multi">
+                <div ngbDropdown class="dropdown" placement="bottom-left">
+                  <a
+                    class="nav-link"
+                    id="dropdownBasic1"
+                    ngbDropdownToggle
+                    style="cursor: pointer;"
+                    ><i class="fa fa-gear" aria-hidden="true"></i
+                  ></a>
+                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-danger">
+                                                <a class="dropdown-item" (click)="ShareFolder(folderview, shareSingleFolder)" style="cursor: pointer;">Share</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="DownloadFolder(folderview)"
+                      style="cursor: pointer;"
+                      >Download</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="UpdateSubFolder(folderview, editsubfolder)"
+                      style="cursor: pointer;"
+                      >Edit</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="MoveTo(folderview, 'Doc')"
+                      style="cursor: pointer;"
+                      >Move</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="Delete(folderview)"
+                      style="cursor: pointer;"
+                      >Delete</a
+                    >
+                    <!-- <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item">Separated link</a> -->
+                                            </div>
+                                        </div>
+                                        <!-- <input class="update btn btn-info" type="button" value="Edit"
+                    (click)="UpdateSubFolder(folderview,editsubfolder)" /> -->
+                                        </td>
+
+                                        <td *ngIf="multi">
+                                            <div ngbDropdown class="dropdown" placement="bottom-left">
+                                                <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                                                    <i class="fa fa-gear" aria-hidden="true" style="cursor: pointer;"></i
+                  ></a>
+                  <div
+                    ngbDropdownMenu
+                    aria-labelledby="dropdownBasic1"
+                    class="dropdown-danger"
+                  >
+                    <a
+                      class="dropdown-item"
+                      (click)="DeleteMorecoin(deleteMultiConformation)"
+                      style="cursor: pointer;"
+                      >Delete</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="SharewithMoreFriends(sharewithmore)"
+                      style="cursor: pointer;"
+                      >Share</a
+                    >
+                    <a
+                      class="dropdown-item"
+                    
+                      style="cursor: pointer;"
+                      >Move</a
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngFor="let ret of SearchResult.files">
+            <tr>
+              <td *ngIf="mob">
+                <input
+                  type="checkbox"
+                  (click)="toggleSelect(ret)"
+                  style="height: 16px; width: 16px; cursor: pointer;"
+                />
+              </td>
+              <td *ngIf="!mob" style="width: 18px;">
+                <input
+                  type="checkbox"
+                  (click)="toggleSelect(ret)"
+                  style="height: 16px; width: 16px; cursor: pointer;"
+                />
+              </td>
+              
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'image/jpeg' ||
+                    ret.documentType == 'image/png') &&
+                  mob
+                "
+              >
+                <img
+                  src="{{ ret.file }}"
+                  style="width: 50px; height: 40px; cursor: pointer;"
+                  (click)="ViewDocumentword(ret, content)"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, content)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'application/pdf' ||
+                    ret.documentType == 'pdf') &&
+                  mob
+                "
+                (click)="ViewDocument(ret, pdftesting)"
+                data-toggle="modal"
+                data-target="#ViewPdf"
+              >
+                <img
+                  src="assets/img/pdficon.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocument(ret, pdftesting)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                    ret.documentType == 'xlsx') &&
+                  mob
+                "
+                (click)="ViewxlsDoc(ret, xlscontent)"
+                data-toggle="modal"
+                data-target="#Viewxls"
+              >
+                <img
+                  src="assets/img/xls.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewxlsDoc(ret, xlscontent)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                    ret.documentType == 'ppt' ||
+                    ret.documentType == 'pptx') &&
+                  mob
+                "
+                (click)="ViewPpt(ret, pptcontent)"
+                data-toggle="modal"
+                data-target="#ViewPpt"
+              >
+                <img
+                  src="assets/img/ppticon2.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewPpt(ret, pptcontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'video/mp4' ||
+                    ret.documentType == 'mp4') &&
+                  mob
+                "
+                (click)="ViewVideo(ret, videocontent)"
+                data-toggle="modal"
+                data-target="#Viewvideo"
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewVideo(ret, videocontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                    ret.documentType == 'doc' ||
+                    ret.documentType == 'docx') &&
+                  mob
+                "
+                (click)="ViewDocumentword(ret, pdftesting)"
+                data-toggle="modal"
+                data-target="#Viewword"
+              >
+                <img
+                  src="assets/img/docx.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, pdftesting)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'application/x-zip-compressed' ||
+                    ret.documentType == 'zip') &&
+                  mob
+                "
+              
+                data-toggle="modal"
+                data-target="#Viewzip"
+              >
+                <img
+                  src="assets/img/zip.jpg"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span  title="{{ ret.documentName }}">
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'text/plain' ||
+                    ret.documentType == 'txt') &&
+                  mob
+                "
+                (click)="ViewDocumentword(ret, textfileview)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/txt.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, textfileview)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'audio/mp3' ||
+                    ret.documentType == 'mp3') &&
+                  mob
+                "
+                (click)="Viewaudio(ret, audiocontent)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="Viewaudio(ret, audiocontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'image/jpeg' ||
+                    ret.documentType == 'image/png') &&
+                  !mob
+                "
+              >
+                <img
+                  src="{{ ret.file }}"
+                  style="width: 50px; height: 40px; cursor: pointer;"
+                  (click)="ViewDocumentword(ret, content)"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, content)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'application/pdf' ||
+                    ret.documentType == 'pdf') &&
+                  !mob
+                "
+                (click)="ViewDocument(ret, pdftesting)"
+                data-toggle="modal"
+                data-target="#ViewPdf"
+              >
+                <img
+                  src="assets/img/pdficon.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocument(ret, pdftesting)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                    ret.documentType == 'xlsx') &&
+                  !mob
+                "
+                (click)="ViewxlsDoc(ret, xlscontent)"
+                data-toggle="modal"
+                data-target="#Viewxls"
+              >
+                <img
+                  src="assets/img/xls.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewxlsDoc(ret, xlscontent)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                    ret.documentType == 'ppt' ||
+                    ret.documentType == 'pptx') &&
+                  !mob
+                "
+                (click)="ViewPpt(ret, pptcontent)"
+                data-toggle="modal"
+                data-target="#ViewPpt"
+              >
+                <img
+                  src="assets/img/ppticon2.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewPpt(ret, pptcontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'video/mp4' ||
+                    ret.documentType == 'mp4') &&
+                  !mob
+                "
+                (click)="ViewVideo(ret, videocontent)"
+                data-toggle="modal"
+                data-target="#Viewvideo"
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewVideo(ret, videocontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                    ret.documentType == 'doc' ||
+                    ret.documentType == 'docx') &&
+                  !mob
+                "
+                (click)="ViewDocumentword(ret, pdftesting)"
+                data-toggle="modal"
+                data-target="#Viewword"
+              >
+                <img
+                  src="assets/img/docx.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, pdftesting)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'application/x-zip-compressed' ||
+                    ret.documentType == 'zip') &&
+                  !mob
+                "
+              
+                data-toggle="modal"
+                data-target="#Viewzip"
+              >
+                <img
+                  src="assets/img/zip.jpg"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span  title="{{ ret.documentName }}">
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'text/plain' ||
+                    ret.documentType == 'txt') &&
+                  !mob
+                "
+                (click)="ViewDocumentword(ret, textfileview)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/txt.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, textfileview)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'audio/mp3' ||
+                    ret.documentType == 'mp3') &&
+                  !mob
+                "
+                (click)="Viewaudio(ret, audiocontent)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="Viewaudio(ret, audiocontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                [hidden]="
+                  ret.documentType == 'text/plain' ||
+                  ret.documentType == 'txt' ||
+                  ret.documentType == 'application/x-zip-compressed' ||
+                  ret.documentType == 'zip' ||
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                  ret.documentType == 'doc' ||
+                  ret.documentType == 'docx' ||
+                  ret.documentType == 'video/mp4' ||
+                  ret.documentType == 'mp4' ||
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                  ret.documentType == 'ppt' ||
+                  ret.documentType == 'pptx' ||
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                  ret.documentType == 'xlsx' ||
+                  ret.documentType == 'application/pdf' ||
+                  ret.documentType == 'image/jpeg' ||
+                  ret.documentType == 'image/png' ||
+                  ret.documentType == 'pdf' ||
+                  ret.documentType == 'audio/mp3' ||
+                  ret.documentType == 'mp3'
+                "
+                
+                data-toggle="modal"
+                data-target="#Viewanyfile"
+              >
+                <img
+                  src="assets/img/anyf1.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span> &nbsp;&nbsp;{{ ret.documentName }} </span>
+              </td>
+
+              <td *ngIf="mob">{{ ret.date | date: "short" }}</td>
+              <td *ngIf="mob">{{ ret.documentType }}</td>
+              <td *ngIf="!multi">
+                <div ngbDropdown class="dropdown" placement="bottom-left">
+                  <a
+                    class="nav-link"
+                    id="dropdownBasic1"
+                    ngbDropdownToggle
+                    style="cursor: pointer;"
+                    ><i class="fa fa-gear" aria-hidden="true"></i
+                  ></a>
+                  <div
+                    ngbDropdownMenu
+                    aria-labelledby="dropdownBasic1"
+                    class="dropdown-danger"
+                  >
+                    <!-- <a class="dropdown-item"  (click)="UpdateSubFolder(folderview,editsubfolder)">Edit</a> -->
+                    <a
+                      class="dropdown-item"
+                      (click)="MoveDoc(ret, 'Img')"
+                      style="cursor: pointer;"
+                      >Move</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="Delete(ret)"
+                      style="cursor: pointer;"
+                      >Delete</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="ShareoneFile(ret, shareSingleFile)"
+                      style="cursor: pointer;"
+                      >Share</a
+                    >
+
+                    <!-- <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item">Separated link</a> -->
+                  </div>
+                </div>
+                <!-- <input class="delete btn btn-danger" type="button" value="Delete" (click)="Delete(ret)" /></td> -->
+              </td>
+
+              <td *ngIf="multi">
+                <div ngbDropdown class="dropdown" placement="bottom-left">
+                  <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle
+                    ><i
+                      class="fa fa-gear"
+                      style="cursor: pointer;"
+                      aria-hidden="true"
+                    ></i
+                  ></a>
+                  <div
+                    ngbDropdownMenu
+                    aria-labelledby="dropdownBasic1"
+                    class="dropdown-danger"
+                  >
+                    <a
+                      class="dropdown-item"
+                      (click)="DeleteMorecoin(deleteMultiConformation)"
+                      style="cursor: pointer;"
+                      >Delete</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="SharewithMoreFriends(sharewithmore)"
+                      style="cursor: pointer;"
+                      >Share</a
+                    >
+                    <a
+                      class="dropdown-item"
+                    
+                      style="cursor: pointer;"
+                      >Move</a
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-3 row" style="display: flex; justify-content: center;">
+        <br /><br />
+
+        <div class="col-md-2 text-center" style="z-index: 5;">
+          <div id="view">
+            <div>
+              <label
+                style="
+                  cursor: pointer;
+                  position: fixed;
+                  border: none;
+                  background: transparent;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  font-weight: 300;
+                  font-size: 16px;
+                "
+                (click)="openmodal()"
+              >
+                <span style="cursor: pointer; padding: 0px; z-index: 100;">
+                  <br /><br />
+                  Upload Object</span
+                >
+              </label>
+            </div>
+            <br /><br />
+            <div data-toggle="modal" data-target="#exampleModal" style="cursor: pointer;z-index: 100;position:fixed;border: none;background: transparent;display: block;text-align: center;align-items: center;font-weight: 300;font-size: 16px;margin-top: 16px;">
+                            <br><br> Upload Object
+
+
+                        </div> 
+            <br /><br />
+
+            <div id="moveid">
+              <button
+                type="button"
+                class="btn"
+                style="padding: 7px; cursor: pointer;"
+                (click)="MoveDash1()"
+              >
+                Move Here
+              </button>
+              <span (click)="cancel()" style="margin-top: 10px;"
+                ><i
+                  class="fa fa-window-close"
+                  title="Cancel"
+                  style="cursor: pointer; padding: 7px; font-size: 1.5em;"
+                ></i
+              ></span>
+            </div>
+
+            <div>
+              <label
+                style="
+                  cursor: pointer;
+                  position: fixed;
+                  border: none;
+                  background: transparent;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  font-weight: 300;
+                  font-size: 16px;
+                "
+              >
+                <!-- <span
+                  class="temp-upload-icon"
+                  for="excel-upload"
+                  style="cursor: pointer; padding: 0px; z-index: 100;"
+                >
+                  <br /><br />
+                  Upload Folder</span
+                > -->
+
+                <input
+                  type="file"
+                  #folderInput
+                  id="excel-upload"
+                  multiple="true"
+                  style="display: none;"
+                  (change)="filesPicked(folderInput.files)"
+                  webkitDirectory
+                />
+              </label>
+            </div>
+
+            <br />
+            <br />
+            <div>
+              <div
+                style="
+                  cursor: pointer;
+                  position: fixed;
+                  border: none;
+                  background: transparent;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  font-weight: 300;
+                  font-size: 16px;
+                  margin-top: 16px;
+                "
+              >
+                <div
+                  style="
+                    border: none;
+                    background: transparent;
+                    z-index: 100;
+                    display: block;
+                    text-align: center;
+                    align-items: center;
+                  "
+                  (click)="addSubFolder(allSubFolders, subfoldercontent)"
+                >
+                  <br />
+                  Create Sub Folder
+                </div>
+                <div *ngIf="role == 1"
+                style="
+                  border: none;
+                  background: transparent;
+                  z-index: 100;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                "
+              
+              >
+                <br />
+               <!--  Add New Client -->
+              </div>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Notify -->
+<div class="col-md-12 row">
+    <div class="col-md-2">&nbsp;</div>
+    <div class="col-md-4" *ngIf="foladdednotify1">
+        <div class="alert alert-info" style="
+        background-color: #545353;
+        box-shadow: none;
+        left: 245px;
+        position: fixed;
+        top: 500px;
+        width: 350px;
+        height: 50px;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 10000;
+      ">
+            <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="material-icons" style="color: white;">close</i>
+      </button>
+            <span style="color: white; margin-top: 7px;">
+        <b
+          style="
+            text-transform: capitalize;
+            font-size: 14px;
+            line-height: 50px;
+          "
+        >
+          {{ notify }}</b
+        ></span
+      >
+    </div>
+  </div>
+</div>
+<!-- Notify -->
+
+<!-- Subfolders -->
+<!--    
+    <div class="col-lg-4">
+    </div>
+    <div class="col-lg-4">
+
+
+    </div>
+
+
+
+    <div class="col-lg-4">
+
+    </div>
+
+    <div class="col-lg-12" *ngIf="!SearchEnabled">
+        <div>&nbsp;</div>
+
+    </div>
+
+
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+
+    <div class="col-md-12 row">
+        <div class="col-md-3">&nbsp;</div>
+        <i class="fa fa-caret-right"></i> <span (click)="gotoallfolders()" style="cursor: pointer;">My Objects </span>
+            <span *ngFor="let d of pathdt">
+                <i class="fa fa-caret-right"   ></i>
+                    <span (click)="GetDetails(d.folderid)" style="cursor: pointer;">{{d.foldername}}</span>
+            </span>
+        </div>
+        <div class="col-md-12 row">
+
+            <div class="col-md-2">
+                <div style="width: 100%;">
+                    <div style="width: 50%;float: left;">
+                        <i *ngIf="mobile" class="fa fa-bars" (click)="treeviewba()" style="margin-left: 10%;"> </i>
+                    </div>
+                    <div style="width: 50%;float: right;">
+                        <i *ngIf="mobile" class="fa fa-bars" (click)="uploadview()" style="margin-left: 115%;"> </i>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3" style="display: flex;justify-content: center;">
+                <select class="form-control" (change)="gridview($event.target.value)" id="listselect" style="border-radius: none;border-top: none;border-bottom:solid 1.5px #1ccbce;border-left: none;border-right: none;">
+              <option hidden>Change View</option>
+              <option value="1" style="cursor: pointer;">Grid View</option>
+              <option value="0" style="cursor: pointer;">List View</option>
+            </select>
+            </div>
+            <div class="col-md-3" style="display: flex;justify-content: center;">
+                <select class="form-control" id="listselect" (change)="sortby($event.target.value)" style="border-radius: none;border-top: none;border-bottom:solid 1.5px #1ccbce;border-left: none;border-right: none;">
+          <option hidden>Sort By</option>
+          <option value="1" style="cursor: pointer;">Date</option>
+          <option value="2" style="cursor: pointer;" >Name</option>
+        </select>
+            </div>
+
+            <div class="col-md-2" style="z-index: 5;">
+                <div id="view">
+                    <div data-toggle="modal" data-target="#exampleModal" style="cursor: pointer;z-index: 100;position:fixed;border: none;background: transparent;display: block;text-align: center;align-items: center;font-weight: 300;font-size: 16px;margin-left:15%">
+                        Upload Object
+
+
+                    </div>
+                    <br><br>
+
+
+                    <div id="moveid">
+                        <button type="button" class="btn" style="padding: 7px;cursor: pointer;" (click)="MoveDash1()">Move Here</button> <span (click)="cancel()" style="margin-top:10px;"><i class="fa fa-window-close" title="Cancel" style="cursor: pointer;padding:7px; font-size: 1.5em;" ></i></span>
+                    </div>
+
+
+
+
+
+                    <div>
+                        <label style="cursor: pointer;position:fixed;border: none;background: transparent;display: block;text-align: center;align-items: center;font-weight: 300;font-size: 16px;margin-left:15%">
+        <span class="temp-upload-icon" for="excel-upload" style="cursor: pointer;
+      padding: 0px;z-index: 100; ">Upload Folder</span>
+     
+        <input type="file" #folderInput id='excel-upload' multiple=true style="display: none"
+            (change)="filesPicked(folderInput.files)" webkitDirectory />
+      </label>
+                    </div>
+
+                    <br>
+                    <br>
+                    <div>
+                        <div style="cursor: pointer;position:fixed;border: none;background: transparent;display: block;text-align: center;align-items: center;font-weight: 300;font-size: 16px;margin-left:15%">
+                            <div style="border: none;background: transparent;z-index: 100;display: block;text-align: center;align-items: center;" (click)="addSubFolder(allSubFolders,subfoldercontent)">
+                                Create Sub Folder
+                            </div>
+                        </div>
+                    </div>
+                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div>&nbsp;</div>
+        <div>&nbsp;</div> -->
+        <!-- GRID VIEW -->
+
+        <div class="col-md-12" *ngIf="!SearchEnabled && gridvalue" style="padding: 0;">
+            <br />
+            <div class="col-md-12 row" style="margin: 0; padding: 0;">
+                <div class="col-md-2" id="treeview" *ngIf="!mobile" style="
+        background-color: #33383e;
+        height: 93vh;
+        margin-top: 13px;
+        z-index: 1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      " id="treeview">
+                    <div *ngIf="ppopup" style="margin-left: 5px;">
+                        <div *ngFor="let a of allFolders1" id="{{ a.folderID }}" style="
+            white-space: nowrap;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white;
+          ">
+                            <span><i
+              class="fa fa-caret-right"
+              (click)="getfolders1(a)"
+              style="cursor: pointer;"
+              id="{{ a.id }}"
+            ></i>
+            <img
+              width="30px"
+              height="30px"
+              src="./assets/img/folder.png"
+              (click)="GetSubfolder(a)"
+            />
+            <span
+              (click)="GetSubfolder(a)"
+              style="cursor: pointer; color: white; letter-spacing: 1.5px;"
+              title="{{ a.folderName }}"
+              >{{ a.folderName }}</span
+            ></span
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-md-2"
+      *ngIf="mobile"
+      style="border-bottom: #555555 1px solid;"
+    >
+      <div style="width: 100%;">
+        <div style="width: 100%;">
+          <!-- <i class="fa fa-bars" (click)="treeviewba()"> </i> -->
+          <span
+            data-toggle="modal"
+            data-target="#exampleModal"
+            style="
+              z-index: 100;
+              border: none;
+              background: transparent;
+              display: block;
+              font-size: 16px;
+            "
+            (click)="openmodal()"
+          >
+            <br />
+            Upload Object
+          </span>
+                            <label style="
+              z-index: 100;
+              font-size: 16px;
+              border: none;
+              background: transparent;
+              display: block;
+            ">
+            <!-- <b
+              class="temp-upload-icon"
+              for="excel-upload"
+              style="cursor: pointer; padding: 0px;"
+            >
+              <br />
+              Upload Folder</b
+            > -->
+
+            <input
+              type="file"
+              #folderInput
+              id="excel-upload"
+              multiple="true"
+              style="display: none;"
+              (change)="filesPicked(folderInput.files)"
+              webkitDirectory
+            />
+            <!-- <i *ngIf="mobile" class="fa fa-bars" (click)="uploadview()" style="margin-left: 90%;"> </i> -->
+          </label>
+                        </div>
+                        <div style="width: 40%; float: right;">
+                            <div id="moveid">
+                                <button type="button" id="moveid" class="btn" style="padding: 7px; cursor: pointer;" (click)="MoveDash1()">
+              Move Here
+            </button>
+                                <span (click)="cancel()" style="margin-top: 10px; cursor: pointer;"><i
+                class="fa fa-window-close"
+                title="Cancel"
+                style="cursor: pointer; padding: 7px; font-size: 1.5em;"
+              ></i
+            ></span>
+                                <br />
+                            </div>
+
+                            <div style="border: none; background: transparent; display: block;">
+                                <b class="temp-upload-icon" for="excel-upload" style="cursor: pointer; padding: 0px;" (click)="addSubFolder(allSubFolders, subfoldercontent)">&nbsp;Create Sub Folder</b
+            >
+          </div>
+          <div *ngIf="role == 1" style="border: none; background: transparent; display: block;">
+            <b class="temp-upload-icon" for="excel-upload" style="cursor: pointer; padding: 0px;">&nbsp;Add New Client</b
+>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 row text-center" style="border-top: solid 1px grey; padding: 0;">
+            <!-- <div class="col-md-12 row" style="border-bottom: #545353 1px solid;height: 30px;margin-top: 20px;padding: 0;">
+                <i class="fa fa-folder" style="color: orange;padding-left: 30px;"></i><span style="cursor: pointer;" [routerLink]="['/allfolders']">&nbsp;My Objects&nbsp; </span>
+                <span *ngFor="let d of pathdt">
+                            <i class="fa fa-folder" style="color: orange;" ></i>
+                                <span (click)="GetDetails(d.folderid)" style="cursor: pointer;">&nbsp;{{d.foldername}}</span>
+                </span>
+            </div> -->
+            <div class="col-md-9 row" style="
+          border-bottom: #545353 1px solid;
+          height: 30px;
+          margin-top: 20px;
+          padding: 0;
+          padding-left: 15px;
+        ">
+                <i class="fa fa-folder" style="color: orange;"></i
+        ><span style="cursor: pointer;" [routerLink]="['/allfolders']"
+          >&nbsp;My Objects&nbsp;
+        </span>
+        <span *ngFor="let d of pathdt">
+          <i class="fa fa-folder" style="color: orange;"></i>
+                <span (click)="GetDetails(d.folderid)" style="cursor: pointer;">&nbsp;{{ d.foldername }}</span
+          >
+        </span>
+            </div>
+            <div class="col-md-3">
+                <input type="text" style="margin-top: 16px;" class="form-control" placeholder="Search..."  [(ngModel)]="val">
+            </div>
+            <!-- <button (click)="open(shareall)" type="submit" class="btn btn-primary">
+              Share All
+            </button> &nbsp; -->
+            <div class="col-md-9 row" style="padding: 0; overflow-y: scroll; height: 88vh;">
+                <div class="col-md-12 text-right" style="height: 20px;">
+                    <button (click)="sortby()" style="background: transparent; border: none; cursor: pointer;">
+            Name
+            <span class="fa fa-stack">
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+              <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </span>
+          </button> &nbsp;
+                    <button (click)="sortbydate()" style="background: transparent; border: none; cursor: pointer;">
+            Date
+            <span class="fa fa-stack">
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+              <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </span>
+          </button> &nbsp;
+                    <i class="fa fa-bars" aria-hidden="true" style="cursor: pointer; color: orange;" title="List View" (click)="gridview(0)"></i> &nbsp;&nbsp;
+                    <i class="fa fa-th" style="cursor: pointer; color: orange;" (click)="gridview(1)" aria-hidden="true" title="Grid View"></i>
+                </div>
+                <div class="col-md-12 row" style="position: absolute; margin-top: 20px;">
+                    <div class="column col-md-3" *ngFor="let folderview of allSubFolders.subFolders">
+                        <div class="show-image" style="cursor: pointer;">
+                            <div class="dropdown" style="padding-bottom: 50px;">
+                                <button class="btn btn-info update dropbtn" style="cursor: pointer;">
+                  <i
+                    class="fa-1x fa fa-ellipsis-v"
+                    aria-hidden="true"
+                    style="color: black;"
+                  ></i>
+                </button>
+                                <div class="dropdown-content">
+                                    <a (click)="UpdateSubFolder(folderview, editsubfolder)" style="cursor: pointer;" data-target="#basicExample" style="cursor: pointer;" data-toggle="modal">Edit</a
+                  >
+                  <a
+                    (click)="MoveTo(folderview, 'Doc')"
+                    style="cursor: pointer;"
+                    >Move</a
+                  >
+                  <!-- <a *ngIf="shareitem" href="#">Copy</a> -->
+                                    <a (click)="Delete(folderview)" style="cursor: pointer;" data-toggle="modal" data-target="#deleteExample">Delete</a
+                  >
+
+                </div>
+              </div>
+              <input
+                class="delete btn btn-danger"
+                type="button"
+                value="Details"
+                (click)="Details(folderview, folderdetails)"
+                data-target="#Details"
+                data-toggle="modal"
+                style="cursor: pointer;"
+              />
+
+              <!-- <input class="delete btn btn-danger" type="button" value="Details" style="cursor: pointer;" (click)="Details(folderview, folderdetails)" /> -->
+
+              <!-- <p
+          style="text-align:center;font-size:18px;color:gold;font-family: Georgia, 'Times New Roman', Times, serif;line-height: 50px;">
+          {{userName}}</p> -->
+
+              <!-- <img src="assets/img/nfolder.png" style="width:100px;height:100px;"
+            (click)="GetSubfolderdetails(folderview)" /> -->
+              <i
+                class="fa-4x fa fa-folder-open-o"
+                aria-hidden="true"
+                style="left: 0; cursor: pointer; color: orange;"
+                (click)="GetSubfolderdetails(folderview)"
+              ></i>
+
+              <!-- <input class="update btn btn-info" type="button" value="Edit"
+          (click)="UpdateSubFolder(folderview,editsubfolder)" /> -->
+
+              <div
+                id="foldername"
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  cursor: pointer;
+                "
+                title="{{ folderview.folderName }}"
+                (click)="GetSubfolderdetails(folderview)"
+              >
+                {{ folderview.folderName }}
+              </div>
+            </div>
+            <br />
+            <br />
+          </div>
+
+          <div
+            class="column col-md-3"
+            *ngFor="let ret of allSubFolders.retData"
+          >
+            <input
+              type="checkbox"
+              style="height: 16px;"
+              *ngIf="shareitem"
+              (click)="toggle(ret)"
+            />
+            <input
+              type="checkbox"
+              style="height: 16px;"
+              *ngIf="deleteitem"
+              (click)="toggleDelete(ret)"
+            />
+            <div class="show-image" style="cursor: pointer;">
+              <div
+                class="dropdown"
+                style="padding-bottom: 20px;"
+                style="cursor: pointer;"
+              >
+                <button class="btn btn-info update dropbtn">
+                  <i
+                    class="fa-1x fa fa-ellipsis-v"
+                    aria-hidden="true"
+                    style="color: black;"
+                  ></i>
+                </button>
+                <div class="dropdown-content">
+                  <a (click)="MoveDoc(ret, 'Img')" style="cursor: pointer;"
+                    >Move</a
+                  >
+                  <!-- <a *ngIf="shareitem" href="#">Copy</a> -->
+                                    <a (click)="Delete(ret)" style="cursor: pointer;" data-toggle="modal" data-target="#deleteExample">Delete</a
+                  >
+                  <a
+                  class="dropdown-item"
+                  href="{{ret.file}}"
+                  style="cursor: pointer;"
+                  >Download</a>
+                </div>
+              </div>
+
+              <div
+                *ngIf="
+                  ret.documentType == 'image/jpeg' ||
+                  ret.documentType == 'image/png'
+                "
+                (click)="ViewDocumentword(ret, content)"
+              >
+                <img
+                  src="{{ ret.file }}"
+                  style="cursor: pointer; width: 100%; height: 111px;"
+                />
+
+                <div
+                  id="foldername"
+                  style="
+                    white-space: nowrap;
+                    width: auto;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    cursor: pointer;
+                  "
+                  title="{{ ret.documentName }}"
+                >
+                  {{ ret.documentName }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  ret.documentType == 'application/pdf' ||
+                  ret.documentType == 'pdf'
+                "
+                (click)="ViewDocument(ret, pdftesting)"
+              >
+                <img
+                  src="assets/img/pdf.png"
+                  style="cursor: pointer; width: 100%; height: 100%;"
+                />
+
+                <div
+                  id="foldername"
+                  style="
+                    white-space: nowrap;
+                    width: auto;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    cursor: pointer;
+                  "
+                  title="{{ ret.documentName }}"
+                >
+                  {{ ret.documentName }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  ret.documentType == 'audio/mp3' || ret.documentType == 'mp3'
+                "
+                (click)="Viewaudio(ret, audiocontent)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="cursor: pointer; width: 100%; height: 100%;"
+                />
+
+                <div
+                  id="foldername"
+                  style="
+                    white-space: nowrap;
+                    width: auto;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    cursor: pointer;
+                  "
+                  title="{{ ret.documentName }}"
+                >
+                  {{ ret.documentName }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                  ret.documentType == 'xlsx'
+                "
+                (click)="ViewxlsDoc(ret, xlscontent)"
+              >
+                <img
+                  src="assets/img/Excel.png"
+                  style="cursor: pointer; width: 100%; height: 100%;"
+                />
+
+                <div
+                  id="foldername"
+                  style="
+                    white-space: nowrap;
+                    width: auto;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    cursor: pointer;
+                  "
+                  title="{{ ret.documentName }}"
+                >
+                  {{ ret.documentName }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                  ret.documentType == 'pptx' ||
+                  ret.documentType == 'ppt'
+                "
+                (click)="ViewPpt(ret, pptcontent)"
+              >
+                <img
+                  src="assets/img/ppt.png"
+                  style="cursor: pointer; width: 100%; height: 100%;"
+                />
+
+                <div
+                  id="foldername"
+                  style="
+                    white-space: nowrap;
+                    width: auto;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    cursor: pointer;
+                  "
+                  title="{{ ret.documentName }}"
+                >
+                  {{ ret.documentName }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  ret.documentType == 'video/mp4' || ret.documentType == 'mp4'
+                "
+                (click)="ViewVideo(ret, videocontent)"
+              >
+                <img
+                  src="assets/img/nvideo.png"
+                  style="cursor: pointer; width: 100%; height: 100%;"
+                />
+
+                <div
+                  id="foldername"
+                  style="
+                    white-space: nowrap;
+                    width: auto;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    cursor: pointer;
+                  "
+                  title="{{ ret.documentName }}"
+                >
+                  {{ ret.documentName }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                  ret.documentType == 'application/octet-stream' ||
+                  ret.documentType == 'doc' ||
+                  ret.documentType == 'docx'
+                "
+                (click)="ViewDocumentword(ret, pdfcontent)"
+              >
+                <img
+                  src="assets/img/word.jpg"
+                  style="cursor: pointer; width: 100%; height: 100%;"
+                />
+
+                <div
+                  id="foldername"
+                  style="
+                    white-space: nowrap;
+                    width: auto;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    cursor: pointer;
+                  "
+                  title="{{ ret.documentName }}"
+                >
+                  {{ ret.documentName }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  ret.documentType == 'text/plain' || ret.documentType == 'txt'
+                "
+                (click)="ViewDocumentword(ret, textfileview)"
+              >
+                <img
+                  src="assets/img/textt.png"
+                  style="cursor: pointer; width: 100%; height: 100%;"
+                />
+
+                <div
+                  id="foldername"
+                  style="
+                    white-space: nowrap;
+                    width: auto;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    cursor: pointer;
+                  "
+                  title="{{ ret.documentName }}"
+                >
+                  {{ ret.documentName }}
+                </div>
+              </div>
+              <div>&nbsp;</div>
+
+              <input
+                class="delete btn btn-danger"
+                type="button"
+                value="Details"
+                (click)="Details(ret, folderdetails)"
+              />
+
+              <br />
+              <br />
+              <br />
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 row" style="display: flex; justify-content: center;">
+        <br /><br />
+
+        <div class="col-md-2 text-center" style="z-index: 5;">
+          <div id="view">
+            <div
+              data-toggle="modal"
+              data-target="#exampleModal"
+              style="
+                cursor: pointer;
+                z-index: 100;
+                position: fixed;
+                border: none;
+                background: transparent;
+                display: block;
+                text-align: center;
+                align-items: center;
+                font-weight: 300;
+                font-size: 16px;
+              "
+            >
+              <br /><br />
+              Upload Object
+            </div>
+            <br /><br />
+            <div id="moveid">
+              <button
+                type="button"
+                class="btn"
+                style="padding: 7px; cursor: pointer;"
+                (click)="MoveDash1()"
+              >
+                Move Here
+              </button>
+              <span (click)="cancel()" style="margin-top: 10px;"
+                ><i
+                  class="fa fa-window-close"
+                  title="Cancel"
+                  style="cursor: pointer; padding: 7px; font-size: 1.5em;"
+                ></i
+              ></span>
+            </div>
+
+            <div>
+              <label
+                style="
+                  font-weight: 300;
+                  z-index: 100;
+                  font-size: 16px;
+                  cursor: pointer;
+                  position: fixed;
+                  border: none;
+                  background: transparent;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  margin-top: 16px;
+                "
+              >
+                <!-- <b
+                  class="temp-upload-icon"
+                  for="excel-upload"
+                  style="cursor: pointer; padding: 0px;"
+                  ><br /><br />
+                  Upload Folder</b
+                > -->
+
+                <input
+                  type="file"
+                  #folderInput
+                  id="excel-upload"
+                  multiple="true"
+                  style="display: none;"
+                  (change)="filesPicked(folderInput.files)"
+                  webkitDirectory
+                />
+                <!-- <label style="cursor: pointer;position:fixed;border: none;background: transparent;display: block;text-align: center;align-items: center;font-weight: 300;font-size: 16px;">
+<span class="temp-upload-icon" for="excel-upload" style="cursor: pointer;
+padding: 0px;z-index: 100; ">
+<br><br>
+Upload Folder</span>
+
+<input type="file" #folderInput id='excel-upload' multiple=true style="display: none"
+    (change)="filesPicked(folderInput.files)" webkitDirectory /> -->
+              </label>
+            </div>
+
+            <br />
+            <br />
+            <div>
+              <div
+                style="
+                  cursor: pointer;
+                  position: fixed;
+                  border: none;
+                  background: transparent;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  font-weight: 300;
+                  font-size: 16px;
+                "
+              >
+                <div
+                  style="
+                    border: none;
+                    background: transparent;
+                    z-index: 100;
+                    display: block;
+                    text-align: center;
+                    align-items: center;
+                    margin-top: 16px;
+                  "
+                  (click)="addSubFolder(allSubFolders, subfoldercontent)"
+                >
+                  <br /><br />
+                  Create Sub Folder
+                </div>
+                <div *ngIf="role == 1"
+                style="
+                  border: none;
+                  background: transparent;
+                  z-index: 100;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  margin-top: 16px;
+                "
+               
+              >
+                <br />
+               <!--  Add New Client -->
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- LIST VIEW -->
+<div
+  class="col-md-12 row"
+  *ngIf="!SearchEnabled && listvalue"
+  style="padding: 0; margin-top: 35px; margin-left: 0; margin-right: 0;"
+>
+  <div
+    class="col-md-12 row"
+    style="padding: 0; margin-left: 0; margin-right: 0;"
+  >
+    <div
+      class="col-md-2"
+      id="treeview"
+      *ngIf="!mobile"
+      style="
+        background-color: #33383e;
+        height: 93vh;
+        margin-top: -5px;
+        z-index: 1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      "
+    >
+      <br />
+
+      <div *ngIf="ppopup" style="margin-left: 20px;">
+        <div
+          *ngFor="let a of allFolders1"
+          id="{{ a.folderID }}"
+          style="
+            white-space: nowrap;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white;
+          "
+        >
+          <span
+            ><i
+              class="fa fa-caret-right"
+              (click)="getfolders1(a)"
+              id="{{ a.id }}"
+              style="cursor: pointer;"
+            ></i
+            >&nbsp;
+            <img
+              width="30px"
+              height="30px"
+              src="./assets/img/folder.png"
+              (click)="GetSubfolder(a)"
+              style="cursor: pointer;"
+            />
+            <span
+              (click)="GetSubfolder(a)"
+              style="cursor: pointer; color: white; letter-spacing: 1.5px;"
+              title="{{ a.folderName }}"
+              >&nbsp;{{ a.folderName }}</span
+            ></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col-md-2"
+      *ngIf="mobile"
+      style="border-bottom: #555555 1px solid;"
+    >
+      <div style="width: 100%;">
+        <div style="width: 100%;">
+          <!-- <i class="fa fa-bars" (click)="treeviewba()"> </i> -->
+          <span
+            data-toggle="modal"
+            data-target="#exampleModal"
+            style="
+              z-index: 100;
+              border: none;
+              background: transparent;
+              display: block;
+              font-size: 16px;
+            "
+            (click)="openmodal()"
+          >
+            <br />
+            Upload Object
+          </span>
+          <label
+            style="
+              z-index: 100;
+              font-size: 16px;
+              border: none;
+              background: transparent;
+              display: block;
+            "
+          >
+            <!-- <b
+              class="temp-upload-icon"
+              for="excel-upload"
+              style="cursor: pointer; padding: 0px;"
+            >
+              <br />
+              Upload Folder</b
+            > -->
+
+            <input
+              type="file"
+              #folderInput
+              id="excel-upload"
+              multiple="true"
+              style="display: none;"
+              (change)="filesPicked(folderInput.files)"
+              webkitDirectory
+            />
+            <!-- <i *ngIf="mobile" class="fa fa-bars" (click)="uploadview()" style="margin-left: 90%;"> </i> -->
+          </label>
+        </div>
+        <div style="width: 40%; float: right;">
+          <div id="moveid">
+            <button
+              type="button"
+              id="moveid"
+              class="btn"
+              style="padding: 7px; cursor: pointer;"
+              (click)="MoveDash1()"
+            >
+              Move Here
+            </button>
+            <span (click)="cancel()" style="margin-top: 10px; cursor: pointer;"
+              ><i
+                class="fa fa-window-close"
+                title="Cancel"
+                style="cursor: pointer; padding: 7px; font-size: 1.5em;"
+              ></i
+            ></span>
+            <br />
+          </div>
+
+          <div
+            style="border: none; background: transparent; display: block;"
+            (click)="addSubFolder('allSubFolders', subfoldercontent)"
+          >
+            <b
+              class="temp-upload-icon"
+              for="excel-upload"
+              style="cursor: pointer; padding: 0px;"
+              (click)="addSubFolder(allSubFolders, subfoldercontent)"
+              >&nbsp;Create Sub Folder</b
+            >
+          </div>
+          <div *ngIf="role == 1"
+            style="border: none; background: transparent; display: block;"
+     
+          >
+            <b
+              class="temp-upload-icon"
+              for="excel-upload"
+              style="cursor: pointer; padding: 0px;"
+             
+              >&nbsp;Add New Client</b
+            >
+          </div>
+         
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10 row text-center" style="padding: 0;">
+      <div
+        class="col-md-9 row"
+        style="
+          border-bottom: #545353 1px solid;
+          height: 30px;
+          margin-top: 10px;
+          padding: 0;
+          padding-left: 15px;
+        "
+      >
+        <i class="fa fa-folder" style="color: orange;"></i
+        ><span style="cursor: pointer;" [routerLink]="['/allfolders']"
+          >&nbsp;My Objects&nbsp;
+        </span>
+        <span *ngFor="let d of pathdt">
+          <!-- <i class="fa fa-folder" style="color: orange;"></i> -->
+          <span (click)="GetDetails(d.folderid)" style="cursor: pointer;"
+            >&nbsp;{{ d.foldername }}</span
+          >
+        </span>
+      </div>
+      <div class="col-md-3">
+        <input type="text"  class="form-control" placeholder="Search..."  [(ngModel)]="val">
+     </div>
+      <div
+        class="col-md-9 row"
+        style="
+          padding: 0;
+          overflow-y: scroll;
+          height: 88vh;
+          display: inline-block;
+          vertical-align: top;
+        "
+      >
+        <div class="col-md-12 text-right" style="height: 20px;">
+          <i
+            class="fa fa-bars"
+            aria-hidden="true"
+            style="cursor: pointer; color: orange;"
+            title="List View"
+            (click)="gridview(0)"
+          ></i>
+          &nbsp;&nbsp;<i
+            class="fa fa-th"
+            style="cursor: pointer; color: orange;"
+            (click)="gridview(1)"
+            aria-hidden="true"
+            title="Grid View"
+          ></i>
+        </div>
+        <table class="table">
+          <thead style="color: #33383e;">
+            <!-- <th *ngIf="shareitem"><i class="fa fa-times" style="font-size: 33px;color: red;margin-left: -13px;" (click)="CancelShare()"></i></th>
+                    <th *ngIf="deleteitem"><i class="fa fa-times" style="font-size: 33px;color: red;margin-left: -13px;" (click)="CancelDelete()"></i></th> -->
+                    <!-- <th *ngIf="mob" style="text-align: center;"><button (click)="open(shareall)" type="submit" class="btn btn-primary">Share All</button></th> -->
+                    <!-- <th *ngIf="!mob" style="width: 20px;text-align: center;"><button (click)="open(shareall)" type="submit" class="btn btn-primary text-center">Share All</button></th> -->
+                 
+            <th
+              *ngIf="mob"
+              style="font-weight: bold; cursor: pointer;"
+              (click)="sortby()"
+            >
+              Name
+              <span class="fa fa-stack">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+              </span>
+            </th>
+            <th
+              *ngIf="!mob"
+              style="font-weight: bold; cursor: pointer; width: 60%;"
+              (click)="sortby()"
+            >
+              Name
+              <span class="fa fa-stack">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+              </span>
+            </th>
+            <th
+              style="font-weight: bold; cursor: pointer;"
+              *ngIf="mob"
+              (click)="sortbydate()"
+            >
+              Modified
+              <span class="fa fa-stack">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+              </span>
+            </th>
+            <th style="font-weight: bold;" *ngIf="mob">Type</th>
+            <th style="font-weight: bold;">Setting</th>
+
+            <!-- <th>Delete</th> -->
+          </thead>
+          <tbody *ngFor="let folderview of allSubFolders.subFolders">
+            <tr>
+              <td *ngIf="mob" style="text-align: center;">
+                <input
+                  type="checkbox"
+                  (click)="toggleSelect(folderview)"
+                  style="height: 16px; width: 16px; cursor: pointer;"
+                />
+              </td>
+              <td *ngIf="!mob" style="text-align: center; width: 20px;">
+                <input
+                  type="checkbox"
+                  (click)="toggleSelect(folderview)"
+                  style="height: 16px; width: 16px; cursor: pointer;"
+                />
+              </td>
+              <td
+                *ngIf="mob"
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+              >
+                <i class="fa fa-folder" style="color: orange;"></i> &nbsp;&nbsp;
+                <span
+                  (click)="GetSubfolder(folderview)"
+                  style="cursor: pointer;"
+                  title="{{ folderview.folderName }}"
+                  >{{ folderview.folderName }}</span
+                >
+              </td>
+              <td
+                *ngIf="!mob"
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+              >
+                <i class="fa fa-folder" style="color: orange;"></i> &nbsp;&nbsp;
+                <span
+                  (click)="GetSubfolder(folderview)"
+                  style="cursor: pointer;"
+                  title="{{ folderview.folderName }}"
+                  >{{ folderview.folderName }}</span
+                >
+              </td>
+              <td *ngIf="mob">{{ folderview.createdOn | date: "short" }}</td>
+              <td *ngIf="mob">Object Folder</td>
+
+              <!-- <td><input class="delete btn btn-danger" type="button" value="Delete" (click)="Delete(folderview)" />
+                </td> -->
+              <td *ngIf="!multi">
+                <div ngbDropdown class="dropdown" placement="bottom-left">
+                  <a
+                    class="nav-link"
+                    id="dropdownBasic1"
+                    ngbDropdownToggle
+                    style="cursor: pointer;"
+                    ><i class="fa fa-gear" aria-hidden="true"></i
+                  ></a>
+                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-danger">
+                                        <a class="dropdown-item" (click)="ShareFolder(folderview, shareSingleFolder)" style="cursor: pointer;">Share</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="DownloadFolder(folderview)"
+                      style="cursor: pointer;"
+                      >Download</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="UpdateSubFolder(folderview, editsubfolder)"
+                      style="cursor: pointer;"
+                      >Edit</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="MoveTo(folderview, 'Doc')"
+                      style="cursor: pointer;"
+                      >Move</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="Delete(folderview)"
+                      style="cursor: pointer;"
+                      >Delete</a
+                    >
+                    <!-- <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item">Separated link</a> -->
+                                    </div>
+                                </div>
+                                <!-- <input class="update btn btn-info" type="button" value="Edit"
+                    (click)="UpdateSubFolder(folderview,editsubfolder)" /> -->
+                                </td>
+
+                                <td *ngIf="multi">
+                                    <div ngbDropdown class="dropdown" placement="bottom-left">
+                                        <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                                            <i class="fa fa-gear" aria-hidden="true" style="cursor: pointer;"></i
+                  ></a>
+                  <div
+                    ngbDropdownMenu
+                    aria-labelledby="dropdownBasic1"
+                    class="dropdown-danger"
+                  >
+                    <a
+                      class="dropdown-item"
+                      (click)="DeleteMorecoin(deleteMultiConformation)"
+                      style="cursor: pointer;"
+                      >Delete</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="SharewithMoreFriends(sharewithmore)"
+                      style="cursor: pointer;"
+                      >Share</a
+                    >
+                    <a
+                      class="dropdown-item"
+                    
+                      style="cursor: pointer;"
+                      >Move</a
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngFor="let ret of allSubFolders.retData">
+            <tr>
+              <td *ngIf="mob">
+                <input
+                  type="checkbox"
+                  (click)="toggleSelect(ret)"
+                  style="height: 16px; width: 16px; cursor: pointer;"
+                />
+              </td>
+              <td *ngIf="!mob" style="width: 18px;">
+                <input
+                  type="checkbox"
+                  (click)="toggleSelect(ret)"
+                  style="height: 16px; width: 16px; cursor: pointer;"
+                />
+              </td>
+              <input
+                type="checkbox"
+                *ngIf="shareitem"
+        
+                style="
+                  height: 16px;
+                  width: 16px;
+                  margin-top: 28px;
+                  cursor: pointer;
+                "
+              />
+              <input
+                type="checkbox"
+                *ngIf="deleteitem"
+             
+                style="
+                  height: 16px;
+                  width: 16px;
+                  margin-top: 28px;
+                  cursor: pointer;
+                "
+              />
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'image/jpeg' ||
+                    ret.documentType == 'image/png') &&
+                  mob
+                "
+              >
+                <img
+                  src="{{ ret.file }}"
+                  style="width: 50px; height: 40px; cursor: pointer;"
+                  (click)="ViewDocumentword(ret, content)"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, content)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'application/pdf' ||
+                    ret.documentType == 'pdf') &&
+                  mob
+                "
+                (click)="ViewDocument(ret, pdftesting)"
+                data-toggle="modal"
+                data-target="#ViewPdf"
+              >
+                <img
+                  src="assets/img/pdficon.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocument(ret, pdftesting)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                    ret.documentType == 'xlsx') &&
+                  mob
+                "
+                (click)="ViewxlsDoc(ret, xlscontent)"
+                data-toggle="modal"
+                data-target="#Viewxls"
+              >
+                <img
+                  src="assets/img/xls.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewxlsDoc(ret, xlscontent)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                    ret.documentType == 'ppt' ||
+                    ret.documentType == 'pptx') &&
+                  mob
+                "
+                (click)="ViewPpt(ret, pptcontent)"
+                data-toggle="modal"
+                data-target="#ViewPpt"
+              >
+                <img
+                  src="assets/img/ppticon2.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewPpt(ret, pptcontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'video/mp4' ||
+                    ret.documentType == 'mp4') &&
+                  mob
+                "
+                (click)="ViewVideo(ret, videocontent)"
+                data-toggle="modal"
+                data-target="#Viewvideo"
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewVideo(ret, videocontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                    ret.documentType == 'doc' ||
+                    ret.documentType == 'docx') &&
+                  mob
+                "
+                (click)="ViewDocumentword(ret, pdftesting)"
+                data-toggle="modal"
+                data-target="#Viewword"
+              >
+                <img
+                  src="assets/img/docx.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, pdftesting)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'application/x-zip-compressed' ||
+                    ret.documentType == 'zip') &&
+                  mob
+                "
+              
+                data-toggle="modal"
+                data-target="#Viewzip"
+              >
+                <img
+                  src="assets/img/zip.jpg"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span  title="{{ ret.documentName }}">
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'text/plain' ||
+                    ret.documentType == 'txt') &&
+                  mob
+                "
+                (click)="ViewDocumentword(ret, textfileview)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/txt.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, textfileview)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                "
+                *ngIf="
+                  (ret.documentType == 'audio/mp3' ||
+                    ret.documentType == 'mp3') &&
+                  mob
+                "
+                (click)="Viewaudio(ret, audiocontent)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="Viewaudio(ret, audiocontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'image/jpeg' ||
+                    ret.documentType == 'image/png') &&
+                  !mob
+                "
+              >
+                <img
+                  src="{{ ret.file }}"
+                  style="width: 50px; height: 40px; cursor: pointer;"
+                  (click)="ViewDocumentword(ret, content)"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, content)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'application/pdf' ||
+                    ret.documentType == 'pdf') &&
+                  !mob
+                "
+                (click)="ViewDocument(ret, pdftesting)"
+                data-toggle="modal"
+             
+              >
+                <img
+                  src="assets/img/pdficon.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocument1(ret, pdftesting)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                    ret.documentType == 'xlsx') &&
+                  !mob
+                "
+                (click)="ViewxlsDoc(ret, xlscontent)"
+                data-toggle="modal"
+                data-target="#Viewxls"
+              >
+                <img
+                  src="assets/img/xls.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewxlsDoc(ret, xlscontent)"
+                  style="cursor: pointer;"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                    ret.documentType == 'ppt' ||
+                    ret.documentType == 'pptx') &&
+                  !mob
+                "
+                (click)="ViewPpt(ret, pptcontent)"
+                data-toggle="modal"
+                data-target="#ViewPpt"
+              >
+                <img
+                  src="assets/img/ppticon2.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewPpt(ret, pptcontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'video/mp4' ||
+                    ret.documentType == 'mp4') &&
+                  !mob
+                "
+                (click)="ViewVideo(ret, videocontent)"
+                data-toggle="modal"
+                data-target="#Viewvideo"
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewVideo(ret, videocontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                    ret.documentType == 'doc' ||
+                    ret.documentType == 'docx') &&
+                  !mob
+                "
+                (click)="ViewDocumentword(ret, pdftesting)"
+                data-toggle="modal"
+                data-target="#Viewword"
+              >
+                <img
+                  src="assets/img/docx.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, pdftesting)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'application/x-zip-compressed' ||
+                    ret.documentType == 'zip') &&
+                  !mob
+                "
+              
+                data-toggle="modal"
+                data-target="#Viewzip"
+              >
+                <img
+                  src="assets/img/zip.jpg"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span  title="{{ ret.documentName }}">
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'text/plain' ||
+                    ret.documentType == 'txt') &&
+                  !mob
+                "
+                (click)="ViewDocumentword(ret, textfileview)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/txt.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="ViewDocumentword(ret, textfileview)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+
+              <td
+                style="
+                  white-space: nowrap;
+                  width: auto;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: left;
+                  width: 70%;
+                "
+                *ngIf="
+                  (ret.documentType == 'audio/mp3' ||
+                    ret.documentType == 'mp3') &&
+                  !mob
+                "
+                (click)="Viewaudio(ret, audiocontent)"
+                data-toggle="modal"
+               
+              >
+                <img
+                  src="assets/img/video.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                />
+                <span
+                  (click)="Viewaudio(ret, audiocontent)"
+                  title="{{ ret.documentName }}"
+                >
+                  &nbsp;&nbsp;{{ ret.documentName }}
+                </span>
+              </td>
+              <td
+              style="
+                white-space: nowrap;
+                width: auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-align: left;
+              "
+              *ngIf="
+                (ret.documentType == 'jpeg' ||
+                  ret.documentType == 'image/jpg') &&
+                mob
+              "
+              (click)="ViewImageDoc(ret, content)"
+              data-toggle="modal"
+        
+            >
+              <img
+                src="assets/img/txt.png"
+                style="width: 35px; height: 34px; cursor: pointer;"
+              />
+              <span
+                (click)="ViewDocumentword(ret, textfileview)"
+                title="{{ ret.documentName }}"
+              >
+                &nbsp;&nbsp;{{ ret.documentName }}
+              </span>
+            </td>
+              <td
+                [hidden]="
+                  ret.documentType == 'text/plain' ||
+                  ret.documentType == 'txt' ||
+                  ret.documentType == 'application/x-zip-compressed' ||
+                  ret.documentType == 'zip' ||
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                  ret.documentType == 'doc' ||
+                  ret.documentType == 'docx' ||
+                  ret.documentType == 'video/mp4' ||
+                  ret.documentType == 'mp4' ||
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                  ret.documentType == 'ppt' ||
+                  ret.documentType == 'pptx' ||
+                  ret.documentType ==
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                  ret.documentType == 'xlsx' ||
+                  ret.documentType == 'application/pdf' ||
+                  ret.documentType == 'image/jpeg' ||
+                  ret.documentType == 'image/png' ||
+                  ret.documentType == 'pdf' ||
+                  ret.documentType == 'audio/mp3' ||
+                  ret.documentType == 'mp3'
+                "
+                
+                data-toggle="modal"
+                data-target="#Viewanyfile"
+              >
+                <!-- <img
+                  src="assets/img/anyf1.png"
+                  style="width: 35px; height: 34px; cursor: pointer;"
+                /> -->
+                <!-- <span> &nbsp;&nbsp;{{ ret.documentName }} </span> -->
+              </td>
+
+              <td *ngIf="mob">{{ ret.date | date: "short" }}</td>
+              <td *ngIf="mob">{{ ret.documentType }}</td>
+              <td *ngIf="!multi">
+                <div ngbDropdown class="dropdown" placement="bottom-left">
+                  <a
+                    class="nav-link"
+                    id="dropdownBasic1"
+                    ngbDropdownToggle
+                    style="cursor: pointer;"
+                    ><i class="fa fa-gear" aria-hidden="true"></i
+                  ></a>
+                  <div
+                    ngbDropdownMenu
+                    aria-labelledby="dropdownBasic1"
+                    class="dropdown-danger"
+                  >
+                    <!-- <a class="dropdown-item"  (click)="UpdateSubFolder(folderview,editsubfolder)">Edit</a> -->
+                    <!-- <a
+                      class="dropdown-item"
+                      (click)="MoveDoc(ret, 'Img')"
+                      style="cursor: pointer;"
+                      >Move</a
+                    > -->
+                    <a
+                      class="dropdown-item"
+                      (click)="Delete(ret)"
+                      style="cursor: pointer;"
+                      >Delete</a
+                    >
+                    <!-- <a
+                      class="dropdown-item"
+                      (click)="ShareoneFile(ret, shareSingleFile)"
+                      style="cursor: pointer;"
+                      >Share</a
+                    > -->
+                    <a
+                    class="dropdown-item"
+                    href="{{ret.file}}"
+                    style="cursor: pointer;"
+                    >Download</a>
+                    <!-- <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item">Separated link</a> -->
+                  </div>
+                </div>
+                <!-- <input class="delete btn btn-danger" type="button" value="Delete" (click)="Delete(ret)" /></td> -->
+              </td>
+
+              <td *ngIf="multi">
+                <div ngbDropdown class="dropdown" placement="bottom-left">
+                  <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle
+                    ><i
+                      class="fa fa-gear"
+                      style="cursor: pointer;"
+                      aria-hidden="true"
+                    ></i
+                  ></a>
+                  <div
+                    ngbDropdownMenu
+                    aria-labelledby="dropdownBasic1"
+                    class="dropdown-danger"
+                  >
+                    <a
+                      class="dropdown-item"
+                      (click)="DeleteMorecoin(deleteMultiConformation)"
+                      style="cursor: pointer;"
+                      >Delete</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="SharewithMoreFriends(sharewithmore)"
+                      style="cursor: pointer;"
+                      >Share</a
+                    >
+                    <a
+                      class="dropdown-item"
+                    
+                      style="cursor: pointer;"
+                      >Move</a
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-3 row" style="display: flex; justify-content: center;">
+        <br /><br />
+
+        <div class="col-md-2 text-center" style="z-index: 5;">
+          <div id="view">
+            <div>
+              <label
+                style="
+                  cursor: pointer;
+                  position: fixed;
+                  border: none;
+                  background: transparent;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  font-weight: 300;
+                  font-size: 16px;
+                "
+                (click)="openmodal()"
+              >
+                <span style="cursor: pointer; padding: 0px; z-index: 100;">
+                  <br /><br />
+                  Upload Object</span
+                >
+              </label>
+            </div>
+            <br /><br />
+            <!-- <div data-toggle="modal" data-target="#exampleModal" style="cursor: pointer;z-index: 100;position:fixed;border: none;background: transparent;display: block;text-align: center;align-items: center;font-weight: 300;font-size: 16px;margin-top: 16px;">
+                            <br><br> Upload Object
+
+
+                        </div> -->
+            <br /><br />
+
+            <div id="moveid">
+              <button
+                type="button"
+                class="btn"
+                style="padding: 7px; cursor: pointer;"
+                (click)="MoveDash1()"
+              >
+                Move Here
+              </button>
+              <span (click)="cancel()" style="margin-top: 10px;"
+                ><i
+                  class="fa fa-window-close"
+                  title="Cancel"
+                  style="cursor: pointer; padding: 7px; font-size: 1.5em;"
+                ></i
+              ></span>
+            </div>
+
+            <div>
+              <label
+                style="
+                  cursor: pointer;
+                  position: fixed;
+                  border: none;
+                  background: transparent;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  font-weight: 300;
+                  font-size: 16px;
+                "
+              >
+                <!-- <span
+                  class="temp-upload-icon"
+                  for="excel-upload"
+                  style="cursor: pointer; padding: 0px; z-index: 100;"
+                >
+                  <br /><br />
+                  Upload Folder</span
+                > -->
+
+                <input
+                  type="file"
+                  #folderInput
+                  id="excel-upload"
+                  multiple="true"
+                  style="display: none;"
+                  (change)="filesPicked(folderInput.files)"
+                  webkitDirectory
+                />
+              </label>
+            </div>
+
+            <br />
+            <br />
+            <div>
+              <div
+                style="
+                  cursor: pointer;
+                  position: fixed;
+                  border: none;
+                  background: transparent;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                  font-weight: 300;
+                  font-size: 16px;
+                  margin-top: 16px;
+                "
+              >
+                <div
+                  style="
+                    border: none;
+                    background: transparent;
+                    z-index: 100;
+                    display: block;
+                    text-align: center;
+                    align-items: center;
+                  "
+                  (click)="addSubFolder(allSubFolders, subfoldercontent)"
+                >
+                  <br />
+                  Create Sub Folder
+                </div>
+                <div *ngIf="role == 1"
+                style="
+                  border: none;
+                  background: transparent;
+                  z-index: 100;
+                  display: block;
+                  text-align: center;
+                  align-items: center;
+                "
+              
+              >
+                <br />
+               <!--  Add New Client -->
+              </div>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button
+  type="button"
+  id="openm"
+  data-toggle="modal"
+  data-target="#exampleModal"
+  style="display: none;"
+>
+  <span
+    style="
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #edf3ff;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin-left: 25px;
+    "
+    ><i class="fa fa-plus" title="Upload Object"></i
+  ></span>
+  Upload Object
+</button>
+
+<button
+  type="button"
+  id="ppup"
+  data-toggle="modal"
+  data-target="#exampleModal213"
+  style="display: none;"
+>
+  <span
+    style="
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #edf3ff;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin-left: 25px;
+    "
+    ><i class="fa fa-plus" title="Upload Object"></i
+  ></span>
+  Upload Object
+</button>
+
+<!-- <div class="col-md-12 row" style="display: flex;justify-content: center;">
+        <button style="border: none;background: transparent;display: block;text-align: center;align-items: center;">
+        <span style="width: 30px;height: 30px;border-radius: 50%;background-color: #edf3ff;box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);display: flex;justify-content: center;align-items: center;cursor: pointer;margin-left: 40px;">
+            <i class="fa fa-plus"(click)="addSubFolder(allSubFolders,subfoldercontent)"title="Create Sub Folder"></i></span>
+                                            Create Sub Folder
+                                            </button>
+                                    </div> -->
+
+                                    <ng-template #sharewithmore let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title" style="text-align: center; font-weight: 600;">
+                                                <b>Select Members to Share</b>
+                                            </h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body" style="font-size: 16px;">
+                                            <div class="col-lg-12 row" *ngFor="let mem of selectedFriend" style="cursor: pointer;">
+                                                {{ mem.friendName }}<br />
+                                            </div>
+                                            <div class="col-lg-12 row">
+                                                <select class="form-control" >
+        <option value=""> Select Friend </option>
+        <option
+          *ngFor="let I of Friends.friendsList"
+          value="{{ I.uid }}"
+          style="cursor: pointer;"
+        >
+          {{ I.friendName }}
+        </option>
+      </select>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <br />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" (click)="ShareExsistingMultiFolderToUsers()" style="cursor: pointer;" (click)="d('Cross click')">
+      Share
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+
+                                    <ng-template #shareall let-d="dismiss" let-c="dismiss">
+                                        <div>
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="modal-basic-title" style="text-align: center; font-weight: 600;">
+                                                    <b>Enter Recipient's Email</b>
+                                                </h4>
+                                                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                            </div>
+                                            <div class="modal-body" style="font-size: 16px;">
+
+                                                <br />
+                                            </div>
+
+                                            <div class="col-lg-12 row" *ngFor="let mem of selectedFriend" style="cursor: pointer;">
+                                                {{ mem.friendName }}<br />
+                                            </div>
+                                            <div class="col-lg-12 row">
+                                                <!-- <select *ngIf="shareitem" class="form-control" >
+                                            <option value="" hidden> Select Friend </option>
+                                            <option
+                                              *ngFor="let I of Friends.friendsList"
+                                              value="{{ I.uid }}"
+                                              style="cursor: pointer;"
+                                            >
+                                              {{ I.friendName }}
+                                            </option>
+                                          </select> -->
+
+                                                <input type="email" [(ngModel)]="email" id="email" name="email" class="form-control" placeholder="Email">
+                                            </div>
+                                            <br />
+
+
+                                            <br />
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" (click)="shareallall()" (click)="d('Cross click')">
+                                          Share
+                                        </button>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+
+                                    <ng-template #folderdetails let-d="dismiss" let-c="dismiss">
+                                        <div *ngIf="Hash">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="modal-basic-title" style="text-align: center; font-weight: 600; width: 100%;">
+                                                    <b>File Details</b>
+                                                </h4>
+                                                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+                                            </div>
+                                            <div class="modal-body" style="font-size: 16px;">
+                                                <div class="" *ngIf="Hash" style="text-align: left;">
+                                                    <div class="col-md-12">&nbsp;</div>
+
+                                                    <div class="col-md-12 row">
+                                                        <div class="col-md-6">DocumentName:</div>
+                                                        <div class="col-md-6" style="color: blue; cursor: pointer;">
+                                                            {{ DocumentName }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 row">
+                                                        <div class="col-md-6">Document Type:</div>
+                                                        <div class="col-md-6" style="color: blue;">{{ ImageType }}</div>
+                                                    </div>
+                                                    <div class="col-md-12 row">
+                                                        <div class="col-md-6">Document Size:</div>
+                                                        <div class="col-md-6" style="color: blue;">{{ docsize1 }}&nbsp;</div>
+                                                    </div>
+                                                    <!-- <div class="col-md-12 row">
+              <div class="col-md-6">CustomerId: </div>
+              <div class="col-md-6" style="color: blue;"> {{CustId}}</div>
+            </div> -->
+                                                    <div class="col-md-12 row">
+                                                        <div class="col-md-6">Created On:</div>
+                                                        <div class="col-md-6" style="color: blue;">
+                                                            {{ DateCreated | date: "short" }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-md-12 row">
+        <div class="col-md-6">CustomerId : </div>
+        <div class="col-md-6" style="color: blue;"> {{CusId}}</div>
+      </div> -->
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!Hash">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="modal-basic-title" style="text-align: center; font-weight: 600;">
+                                                    <b>Folder Details</b>
+                                                </h4>
+                                                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+                                            </div>
+                                            <div class="modal-body" style="font-size: 16px;">
+                                                <div class="" *ngIf="!Hash">
+                                                    <div class="col-md-12">&nbsp;</div>
+                                                    <div class="col-md-12">&nbsp;</div>
+                                                    <div class="col-md-12 row">
+                                                        <div class="col-md-6">Folder Name :</div>
+                                                        <div class="col-md-6" style="color: blue;" style="cursor: pointer;">
+                                                            {{ FolderName }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 row">
+                                                        <div class="col-md-6">Created On :</div>
+                                                        <div class="col-md-6" style="color: blue;">
+                                                            {{ CreatedOn | date: "short" }}
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="col-md-12 row">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-4">CustomerId : </div>
+                  <div class="col-md-6" style="color: blue;"> {{CusId}}</div>
+                </div> -->
+                                                </div>
+                                                <!-- <div class="col-md-12 row">
+            <div class="col-md-6">CustomerId : </div>
+            <div class="col-md-6" style="color: blue;"> {{CusId}}</div>
+          </div> -->
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning" (click)="d('Cross click')">
+      Close
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+
+                                    <ng-template #subfoldercontent let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title">Create Sub Folder</h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5 class="modal-title" id="modal-basic-title">Folder Name:</h5>
+                                            <input type="text" id="msg" [(ngModel)]="msg" class="form-control" name="dp" />
+                                        </div>
+                                        <br />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" (click)="savenewSubFolder()" (click)="d('Cross click')" style="color: black; cursor: pointer; width: 15%;">
+      Add
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+
+                                    <ng-template #sharefileviamailcontent let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title">Share</h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5 class="modal-title" id="modal-basic-title">From Mail:</h5>
+                                            <input type="text" id="usermail" [(ngModel)]="usermail" class="form-control" name="dp" />
+                                            <h5 class="modal-title" id="modal-basic-title">Password:</h5>
+                                            <input type="password" id="frmmailpwd" [(ngModel)]="frmmailpwd" class="form-control" name="dp" />
+                                            <h5 class="modal-title" id="modal-basic-title">To Mail:</h5>
+                                            <input type="text" id="tomail" [(ngModel)]="tomail" class="form-control" name="dp" />
+                                            <h5 class="modal-title" id="modal-basic-title">Message</h5>
+                                            <input type="text" id="mailmsg" [(ngModel)]="mailmsg" class="form-control" name="dp" />
+                                        </div>
+                                        <br />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-dark"  style="color: black;">
+      Send
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+
+                                    <ng-template #importmailcontent let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title">Import</h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5 class="modal-title" id="modal-basic-title">Mail Id:</h5>
+                                            <input type="text" id="usermail" [(ngModel)]="usermail" class="form-control" name="dp" />
+                                            <h5 class="modal-title" id="modal-basic-title">Password:</h5>
+                                            <input type="password" id="importmailpwd" [(ngModel)]="importmailpwd" class="form-control" name="dp" />
+                                        </div>
+                                        <br />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-dark"  style="color: black;">
+      View
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+
+                                    <!-- EDIT FOLDER -->
+                                    <ng-template #editsubfolder let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title">Update Folder</h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5 class="modal-title" id="modal-basic-title">Folder Name:</h5>
+                                            <input type="text" id="updatemsg" [(ngModel)]="updatemsg" class="form-control" name="dp" />
+                                        </div>
+                                        <br />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" (click)="UpdateSubFolderName()" (click)="d('Cross click')" style="color: black; cursor: pointer; width: 15%;">
+      Update
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+
+                                    <!-- IMAGE VIEW -->
+                                    <ng-template #content let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <div>&nbsp;</div>
+                                            <!-- <h6 style="float: left;">
+                                                Date &nbsp;: &nbsp;{{ pdfUrl.date | date: "short" }}
+                                            </h6> -->
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{{ pdfUrl }}" class="img-responsive" alt="" style="height: 300px; width: 400px;" />
+                                            <br /><br />
+                                            <div class="col-lg-12 row">
+                                                <div class="col-lg-5"></div>
+                                                <div class="col-lg-6">
+                                                    <a [href]="pdfUrl" style="cursor: pointer;"><button class="btn btn-info">
+                                                            <i class="fa fa-download"></i>Download
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <!-- PDF VIEW -->
+                                    <ng-template #pdftesting let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <div>&nbsp;</div>
+                                            <!-- <h6 style="float: left;">
+                                                &nbsp; &nbsp; Date &nbsp;: &nbsp;{{ zzz.date | date: "short" }}
+                                            </h6> -->
+                                    
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    
+                                        <div class="modal-body">
+                                            <ngx-doc-viewer [url]="pdfUrl" viewer="google" style="width:
+                                    100%; height: 70vh;"></ngx-doc-viewer>
+                                            <br /><br />
+                                    
+                                            <!-- <a [href]="pdfUrl"><button class="btn btn-info"><i
+                                    class="fa fa-download"></i>Download</button> </a> -->
+                                    
+                                            <div class="col-lg-12 row">
+                                                <div class="col-lg-5"></div>
+                                                <div class="col-lg-6">
+                                                    <a [href]="pdfUrl"><button class="btn btn-info">
+                                                            <i class="fa fa-download"></i>Download
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <!-- TEXT FILE VIEW -->
+                                    <ng-template #textfileview let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header" style="width: 883px; background-color: white;">
+                                            <div>&nbsp;</div>
+                                            <h6 style="text-align: center;">{{ zzz.documentName }}</h6>
+                                            <h6 style="float: left;">
+                                                Date &nbsp;: &nbsp;{{ zzz.date | date: "short" }}
+                                            </h6>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body" style="width: 883px; background-color: white;">
+                                            <ngx-doc-viewer [url]="pdfUrl" viewer="google" style="width: 100%; height: 70vh;"></ngx-doc-viewer>
+                                            <br /><br />
+
+                                            <div class="col-lg-12 row">
+                                                <div class="col-lg-5"></div>
+                                                <div class="col-lg-6">
+                                                    <a [href]="pdfUrl"><button class="btn btn-info">
+            <i class="fa fa-download"></i>Download
+          </button>
+        </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <!-- DOCX VIEW -->
+                                    <ng-template #pdfcontent let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header" style="width: 883px; background-color: white;">
+                                            <div>&nbsp;</div>
+                                            <h6 style="text-align: center;">{{ zzz.documentName }}</h6>
+                                            <h6 style="float: left;">
+                                                Date &nbsp;: &nbsp;{{ zzz.date | date: "short" }}
+                                            </h6>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body" style="width: 883px; background-color: white;">
+                                            <ngx-doc-viewer [url]="pdfUrl" viewer="google" style="width: 100%; height: 70vh;"></ngx-doc-viewer>
+                                            <br /><br />
+
+                                            <div class="col-lg-12 row">
+                                                <div class="col-lg-5"></div>
+                                                <div class="col-lg-6">
+                                                    <a [href]="pdfUrl"><button class="btn btn-info">
+            <i class="fa fa-download"></i>Download
+          </button>
+        </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template #xlscontent let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header" style="width: 100vh; background-color: white;">
+                                            <div>&nbsp;</div>
+                                            <h6 style="float: left;">
+                                                Date &nbsp;: &nbsp;{{ zzz.date | date: "short" }}
+                                            </h6>
+
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+
+                                        <div class="modal-body" style="width: 100vh; background-color: white;" *ngIf="pdfUrl">
+                                            <!-- <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQr43mmLOdZoy-EgkXcF_bahfs-uxtcvOXhEbnLtm-K2ubQjw8rGnv-z-9v8YL3SidA35WCpsmXaMnk/pubhtml?widget=true&amp;headers=false"></iframe> -->
+                                            <pdf-viewer [src]="pdfUrl" [render-text]="true" style="display: contents;">
+                                            </pdf-viewer>
+                                            <ngx-doc-viewer [url]="pdfUrl" viewer="google" style="width: 100vh; height: 70vh;"></ngx-doc-viewer>
+
+                                            <div class="col-lg-12 row">
+                                                <div class="col-lg-5"></div>
+                                                <div class="col-lg-7">
+                                                    <a href="{{ pdfUrl.DocPath }}" ><button class="btn btn-primary">
+            <i class="fa fa-download"></i>Download
+          </button>
+        </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template #pptcontent let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header" style="width: 883px; background-color: white;">
+                                            <div>&nbsp;</div>
+                                            <h6 style="float: left;">
+                                                Date &nbsp;: &nbsp;{{ zzz.date | date: "short" }}
+                                            </h6>
+
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+
+                                        <!-- <object type="application/pdf" width="1000" height="800" data="{{pdfUrl.DocPath}}"></object> -->
+
+                                        <div class="modal-body" style="width: 883px; background-color: white;">
+                                          <ngx-doc-viewer [url]="pdfUrl" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer>
+
+                                            <div class="col-lg-12 row">
+                                                <div class="col-lg-5"></div>
+                                                <div class="col-lg-7">
+                                                    <a href="{{ pdfUrl.DocPath }}" ><button class="btn btn-primary">
+            <i class="fa fa-download"></i>Download
+          </button>
+        </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template #videocontent let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header" style="width: 883px; background-color: white;">
+                                            <div>&nbsp;</div>
+                                            <h6 style="float: left;">
+                                                Date &nbsp;: &nbsp;{{ videodate | date: "short" }}
+                                            </h6>
+
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+
+                                        <!-- <object type="video/mp4" width="1000" height="800" data="{{pdfUrl}}"></object> -->
+
+                                        <div class="modal-body" style="width: 883px; background-color: white;">
+                                            <video controls #videoPlayer style="height: 350px; width: 100%;">
+      <source src="{{ videoplay }}" type="video/mp4" />
+    </video>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template #audiocontent let-d="dismiss" let-c="dismiss">
+                                        <!-- <object type="video/mp4" width="1000" height="800" data="{{pdfUrl}}"></object> -->
+
+                                        <div class="modal-body" style="width: 883px; background-color: white;">
+                                            <audio controls #videoPlayer style="height: 350px; width: 400px;">
+      <source src="{{ audioplay }}" type="video/mp4" />
+    </audio>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template #shareSingleFile let-d="dismiss" let-c="dismiss">
+                                      <div class="modal-header">
+                                          <h4 class="modal-title" id="modal-basic-title" style="text-align: center; font-weight: 600;">
+                                              <b>Enter Recipient's Email</b>
+                                          </h4>
+                                          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+                                      </div>
+                                      <div class="modal-body" style="font-size: 16px;">
+                                          <!-- <div class="col-lg-12 row" *ngFor="let mem of selectedFriend">
+                                              {{ mem.friendName }}<br />
+                                          </div> -->
+                                          <div class="col-lg-12 row">
+                                            <input type="email" [(ngModel)]="email" id="email" name="email" class="form-control" placeholder="Email">
+
+                                          </div>
+                                          <br />
+                                      </div>
+                                      <br />
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-primary" (click)="SharOnlyFileToUsers()" (click)="d('Cross click')">
+    Share
+  </button>
+                                      </div>
+                                      <br />
+                                  </ng-template>
+
+                                    <ng-template #shareSingleFolder let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title" style="text-align: center; font-weight: 600;">
+                                                <b>Select Members to Share</b>
+                                            </h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body" style="font-size: 16px;">
+
+
+                                            <br />
+                                        </div>
+
+                                        <div class="col-lg-12 row" *ngFor="let mem of selectedFriend">
+                                            {{ mem.friendName }}<br />
+                                        </div>
+                                        <div class="col-lg-12 row">
+                                            <select class="form-control" >
+        <option value="" hidden> Select Friend </option>
+        <option *ngFor="let I of Friends.friendsList" value="{{ I.uid }}">
+          {{ I.friendName }}
+        </option>
+      </select>
+                                        </div>
+                                        <br />
+                                        <div class="col-lg-12 text-center"> <span style="font-size: 12px;">Don't find your friend in the list? &nbsp;</span>
+                                            <button type="button" class="btn btn-primary" (click)="addfrnd()">
+      Add Friend
+    </button>
+                                        </div>
+                                        <div *ngIf="frndrqst">
+                                            <br>
+                                            <div>
+                                                <!-- <h5 class="modal-title" id="modal-basic-title" style="color: mediumslateblue;padding-left:10px ;">
+                                                            Email:
+                                                        </h5> -->
+                                                <input type="text" id="accid" [(ngModel)]="accid" class="form-control" placeholder="Email" name="dp" />
+                                            </div>
+                                            <br />
+                                            <div>
+
+                                                <button type="button" class="btn btn-outline-dark btn-primary" (click)="savefrienddetails()" style="color: black; color: white;padding: 5px;margin-left: 10px;">
+          Send Request
+        </button>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" (click)="ShareExsistingSubFolderToUsers()" (click)="d('Cross click')">
+      Share
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+                                    <ng-template #deleteMultiConformation let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title" style="text-align: center; font-weight: 600;">
+                                                <b>Delete Data </b>
+                                            </h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body" style="font-size: 16px;">
+                                            <div class="col-lg-12 row">
+                                                <h4 class="modal-title w-100" id="myModalLabel">
+                                                    <b>Do You want to Delete {{ deletemulticontent }} &nbsp; ?</b>
+                                                </h4>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <br />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" (click)="Deleteselected()" (click)="d('Cross click')">
+      Delete
+    </button>
+                                            <button type="button" class="btn btn-warning" (click)="d('Cross click')">
+      Close
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+                                    <ng-template #addclient let-d="dismiss" let-c="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title">Add Client</h4>
+                                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5 class="modal-title" id="modal-basic-title">Client Name:</h5>
+                                            <input type="text" id="client" [(ngModel)]="client" class="form-control" name="dp" />
+                                        </div>
+                                        <br />
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"(click)="d('Cross click')" style="cursor: pointer;" style="color: black; width: 16%;">
+      Add
+    </button>
+                                        </div>
+                                        <br />
+                                    </ng-template>
+
+                                    <!-- <ng-template #Movetofold let-d="dismiss" let-c="dismiss">
+    <div class="modal-header">
+        <br />
+        <h4 class="modal-title" id="modal-basic-title" style="text-align: center;font-weight: 600"><b>Select Folder to Move</b>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" style="font-size: 16px;">
+        <div>
+            <div *ngFor="let a of allFolders1" id="{{a.folderID}}">
+
+                <span><i class="fa fa-caret-right"  (click)="getfolders(a,Movetofold)"  id="{{a.id}}" ></i> <img width="30px" height="30px" src="./assets/img/folder.png"  (click)="gotoFolder(a)">
+              <span  (click)="gotoFolder(a,Movetofold)">{{a.folderName}}</span></span>
+
+            </div>
+        </div>
+    </div><br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="MoveMultiFolder(destinationFold)" (click)="d('Cross click')">Move</button>
+        <button type="button" class="btn btn-warning" (click)="d('Cross click')">Close</button>
+    </div>
+    <br />
+</ng-template> -->
+
+                                    <button type="button" id="ppup12" data-toggle="modal" data-target="#Movetofold" style="visibility: hidden;">
+  <span
+    style="
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #edf3ff;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin-left: 25px;
+    "
+    ><i class="fa fa-plus" title="Upload Object"></i
+  ></span>
+  Upload Object
+</button>
+                                    <div class="modal fade" id="Movetofold" *ngIf="mvlfd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document" style="margin-left: 32%; margin-top: 4%;">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                        Select Folder to Move
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div>
+                                                        <div class="col-md-12">
+                                                            <div>
+                                                                <!-- <div *ngFor="let a of allFolders1" id="{{a.folderID}}">
+
+                                <span><i class="fa fa-caret-right"  (click)="getfolders1(a)"  id="{{a.id}}" ></i> <img width="30px" height="30px" src="./assets/img/folder.png"  (click)="gotoFolder(a,Movetofold)">
+                                 <span  (click)="gotoFolder(a,Movetofold)">{{a.folderName}}</span></span>
+
+                            </div> -->
+                                                                <div *ngFor="let a of allFolders1" id="{{ a.folderID }}">
+                                                                    <span><i
+                    class="fa fa-caret-right"
+                  
+                    id="{{ a.id }}"
+                  ></i>
+                  <img
+                    width="30px"
+                    height="30px"
+                    src="./assets/img/folder.png"
+             
+                  />
+                  <span
+              
+                    style="cursor: pointer;"
+                  >
+                    {{ a.folderName }}</span
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="MoveMultiFolder(destinationFold)"
+        >
+          Move
+        </button>
+        <button
+          type="button"
+          id="closemove"
+          class="btn btn-warning"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OTHER PROGRESS BAR Ansuha-->
+<div class="col-lg-12 row" *ngIf="showper">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-7" style="position: fixed; top: 86%; left: 20%;">
+    <p *ngIf="errormsg">
+      <b style="color: black;">{{ notify }} </b>
+    </p>
+    <p
+      class="alert alert-info"
+      style="box-shadow: white; background-color: white;"
+      *ngIf="generalprogressbar"
+    >
+      <b *ngIf="folderCreating && !foldercreated" style="color: black;"
+        >{{ Creatingmsg }} :{{ n }}%</b
+      >
+
+      <img
+        src="./assets/img/tick.png"
+        height="20px;"
+        width="20px;"
+        *ngIf="foldercreated && !folderCreating"
+      />&nbsp;&nbsp;
+      <b style="color: black;" *ngIf="foldercreated && !folderCreating"
+        >&nbsp;&nbsp; {{ createdmsg }}
+      </b>
+      <br />
+      <progress value="{{ n }}" max="100" style="width: 100%; height: 7px;">
+      </progress
+      >&nbsp;&nbsp;{{ n }}%
+    </p>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal213"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog"
+    role="document"
+    style="margin-left: 32%; margin-top: 4%;"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="exampleModalLabel">Upload Folder</h5> -->
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="canceltree()"
+        >
+          <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div>
+                                                                        <div class="col-md-12">
+                                                                            <div>
+                                                                                <div *ngFor="let a of allFolders1" id="{{ a.folderID }}">
+                                                                                    <span><i
+                    class="fa fa-caret-right"
+                    style="cursor: pointer;"
+                    (click)="getfolders2(a)"
+                    id="{{ a.id }}"
+                  ></i>
+                  <img
+                    width="30px"
+                    height="30px"
+                    src="./assets/img/folder.png"
+                    (click)="gotoFolder12(a)"
+                  />
+                  <span (click)="gotoFolder12(a)" style="cursor: pointer;">{{
+                    a.folderName
+                  }}</span></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">&nbsp;</div>
+                                                                        <div class="col-md-12">&nbsp;</div>
+                                                                        <div class="col-md-12" style="text-align: center;">Or</div>
+
+                                                                        <div class="col-md-12">&nbsp;</div>
+                                                                        <div class="col-md-12">&nbsp;</div>
+                                                                        <div class="col-md-12" id="Uploadhere" style="text-align: center; cursor: pointer;" (click)="uploadhere()">
+                                                                            Upload Here
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" id="cancelUpload1" class="btn btn-secondary" (click)="cancelupload()" data-dismiss="modal">
+          Cancel
+        </button>
+                                                                    <button type="button" class="btn btn-primary" (click)="Uploaddocs1()">
+          Upload
+        </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" style="left: 25vw; top: 25vh;" role="document">
+                                                            <div class="modal-content" style="width: 50vw;">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Upload Object</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                                                                </div>
+                                                                <div class="modal-body" style="display: flex; justify-content: center;">
+                                                                    <div class="container fileUploadWrapper">
+                                                                        <div class="col-md-12">
+                                                                            <div class="fileupload" appDragDropFileUpload (click)="fileField.click()" (fileDropped)="onDrop($event)">
+                                                                                <span class="ddinfo">Choose an object or drag here</span>
+                                                                            </div>
+                                                                            <input type="file" name="avatars" #fileField (change)="onChange($event)" multiple />
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <ul style="list-style: none;">
+                                                                                <li *ngFor="let file of files1">
+                                                                                    <div *ngIf="file.type == 'image/png'">
+                                                                                        <img src="./assets/img/image.png" width="30px" height="30px" />{{ file.name }}
+                                                                                    </div>
+                                                                                    <div *ngIf="
+                    file.type ==
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                  ">
+                                                                                        <img src="./assets/img/xls.png" width="30px" height="30px" />{{ file.name }}
+                                                                                    </div>
+                                                                                    <div *ngIf="file.type == 'video/mp4'">
+                                                                                        <img src="./assets/img/nvideo.png" width="30px" height="30px" />{{ file.name }}
+                                                                                    </div>
+                                                                                    <div *ngIf="file.type == 'application/x-zip-compressed'">
+                                                                                        <img src="./assets/img/zip.jpg" width="30px" height="30px" />{{ file.name }}
+                                                                                    </div>
+                                                                                    <div *ngIf="file.type == 'text/plain'">
+                                                                                        <img src="./assets/img/text.png" width="30px" height="30px" />{{ file.name }}
+                                                                                    </div>
+                                                                                    <div *ngIf="file.type == 'application/pdf'">
+                                                                                        <img src="./assets/img/pdficon.png" width="30px" height="30px" />{{ file.name }}
+                                                                                    </div>
+                                                                                    <div *ngIf="
+                    file.type ==
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                  ">
+                                                                                        <img src="./assets/img/ppt.png" width="30px" height="30px" />{{ file.name }}
+                                                                                    </div>
+                                                                                    <div *ngIf="
+                    file.type ==
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                  ">
+                                                                                        <img src="./assets/img/word.jpg" width="30px" height="30px" />{{ file.name }}
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" id="cancelUpload" class="btn btn-secondary" data-dismiss="modal" style="cursor: pointer;">
+          Cancel
+        </button>
+                                                                    <button type="button" class="btn btn-primary" (click)="Uploaddocs()" style="cursor: pointer;">
+          Upload
+        </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <style>
+                                                        .row {
+                                                            display: flex;
+                                                            flex-wrap: wrap;
+                                                            padding: 0 4px;
+                                                        }
+                                                        /* Create two equal columns that sits next to each other */
+                                                        /*.column {
+        flex: 25%;
+        padding: 0 60px;
+    }*/
+                                                        
+                                                        .column {
+                                                            padding: 0px 55px;
+                                                        }
+                                                        
+                                                        .column img {
+                                                            margin-top: 8px;
+                                                            vertical-align: middle;
+                                                        }
+                                                        
+                                                        div.show-image {
+                                                            position: relative;
+                                                            margin: 5px;
+                                                        }
+                                                        
+                                                        div.show-image:hover img {
+                                                            opacity: 1;
+                                                        }
+                                                        
+                                                        div.show-image:hover input {
+                                                            display: block;
+                                                        }
+                                                        
+                                                        div.show-image input {
+                                                            position: absolute;
+                                                            display: none;
+                                                        }
+                                                        
+                                                        div.show-image input.update {
+                                                            top: -5%;
+                                                            left: -10%;
+                                                        }
+                                                        
+                                                        div.show-image input.delete {
+                                                            top: -5%;
+                                                            left: 80%;
+                                                        }
+                                                        
+                                                        div.show-image div.dropdown {
+                                                            top: -5%;
+                                                            left: -10%;
+                                                        }
+                                                        
+                                                        .column {
+                                                            padding: 0px 52px;
+                                                        }
+                                                        
+                                                        .column img {
+                                                            margin-top: 8px;
+                                                            vertical-align: middle;
+                                                        }
+                                                        
+                                                        div.show-image {
+                                                            position: relative;
+                                                            margin: 5px;
+                                                        }
+                                                        
+                                                        input[type="checkbox"] {
+                                                            width: 30px;
+                                                            height: 30px;
+                                                        }
+                                                        
+                                                        div.show-image:hover img {
+                                                            opacity: 1;
+                                                        }
+                                                        
+                                                        div.show-image:hover input {
+                                                            display: block;
+                                                        }
+                                                        
+                                                        div.show-image:hover button {
+                                                            display: block;
+                                                        }
+                                                        
+                                                        div.show-image input {
+                                                            position: absolute;
+                                                            display: none;
+                                                        }
+                                                        
+                                                        div.show-image:hover button {
+                                                            display: block;
+                                                        }
+                                                        
+                                                        div.show-image button {
+                                                            position: absolute;
+                                                            display: none;
+                                                        }
+                                                        
+                                                        div.show-image input.update {
+                                                            top: -5%;
+                                                            left: -10%;
+                                                        }
+                                                        
+                                                        div.show-image input.delete {
+                                                            top: -2%;
+                                                            left: 80%;
+                                                        }
+                                                        
+                                                        div.settings a.abc {
+                                                            top: -5%;
+                                                            left: 60%;
+                                                            display: inline;
+                                                        }
+                                                        
+                                                        div.show-image div.dropdown {
+                                                            top: -5%;
+                                                            left: -10%;
+                                                        }
+                                                        /* On Hover */
+                                                        
+                                                        .dropdown-content {
+                                                            display: none;
+                                                            position: absolute;
+                                                            background-color: #c5b5b0;
+                                                            min-width: 100px;
+                                                            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                                                            z-index: 1;
+                                                        }
+                                                        
+                                                        .dropdown-content a {
+                                                            color: black;
+                                                            padding: 12px 16px;
+                                                            text-decoration: none;
+                                                            display: block;
+                                                        }
+                                                        
+                                                        .dropdown-content a:hover {
+                                                            background-color: #ddd;
+                                                        }
+                                                        
+                                                        .dropdown:hover .dropdown-content {
+                                                            display: block;
+                                                        }
+                                                        
+                                                        .dropdown:hover .dropbtn {
+                                                            background-color: #323353;
+                                                        }
+                                                        
+                                                        .dropbtn {
+                                                            background-color: rgb(106, 110, 39);
+                                                            color: white;
+                                                            padding: 9px;
+                                                            font-size: 13px;
+                                                            border: none;
+                                                            top: -30%;
+                                                            left: -6%;
+                                                        }
+                                                        
+                                                        .fas fa-caret-down {
+                                                            color: rgb(0, 0, 0);
+                                                            font-size: 30px;
+                                                        }
+                                                        
+                                                        .switch {
+                                                            position: relative;
+                                                            display: inline-block;
+                                                            width: 60px;
+                                                            height: 34px;
+                                                        }
+                                                        
+                                                        .switch input {
+                                                            opacity: 0;
+                                                            width: 0;
+                                                            height: 0;
+                                                        }
+                                                        
+                                                        .slider {
+                                                            position: absolute;
+                                                            cursor: pointer;
+                                                            top: 0;
+                                                            left: 0;
+                                                            right: 0;
+                                                            bottom: 0;
+                                                            background-color: #ccc;
+                                                            -webkit-transition: 0.4s;
+                                                            transition: 0.4s;
+                                                        }
+                                                        
+                                                        .slider:before {
+                                                            position: absolute;
+                                                            content: "";
+                                                            height: 26px;
+                                                            width: 26px;
+                                                            left: 4px;
+                                                            bottom: 4px;
+                                                            background-color: white;
+                                                            -webkit-transition: 0.4s;
+                                                            transition: 0.4s;
+                                                        }
+                                                        
+                                                        input:checked+.slider {
+                                                            background-color: #2196f3;
+                                                        }
+                                                        
+                                                        input:focus+.slider {
+                                                            box-shadow: 0 0 1px #2196f3;
+                                                        }
+                                                        
+                                                        input:checked+.slider:before {
+                                                            -webkit-transform: translateX(26px);
+                                                            -ms-transform: translateX(26px);
+                                                            transform: translateX(26px);
+                                                        }
+                                                        /* Rounded sliders */
+                                                        
+                                                        .slider.round {
+                                                            border-radius: 34px;
+                                                        }
+                                                        
+                                                        .slider.round:before {
+                                                            border-radius: 50%;
+                                                        }
+                                                        
+                                                        .background-highlight {
+                                                            background-color: #eaeaea;
+                                                        }
+                                                        
+                                                        #foldername:hover {
+                                                            color: #1bcbce;
+                                                        }
+                                                    </style>
+
+                                                    <!-- IMAGE VIEW -->
+
+
+
+<!-- TXT VIEW -->
+
+<ng-template #textfileview let-d="dismiss" let-c="dismiss">
+    <div class="modal-header" style="width: 883px;">
+        <div>&nbsp;</div>
+        <!-- <h6 style="float: left;">
+            Date &nbsp;: &nbsp;{{ zzz.date | date: "short" }}
+        </h6> -->
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body" style="width: 883px;">
+        <ngx-doc-viewer [url]="pdfUrl" viewer="google" style="width: 100%; height: 70vh;"></ngx-doc-viewer>
+        <br /><br />
+
+        <div class="col-lg-12 row">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-6">
+                <a [href]="pdfUrl"><button class="btn btn-info">
+<i class="fa fa-download"></i>Download
+</button>
+</a>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!-- WORD DOCUMENT VIEW -->
+
+<ng-template #docfileview let-d="dismiss" let-c="dismiss">
+    <div class="modal-header">
+        <div class="modal-header">
+            <div>&nbsp;</div>
+            <!-- <h6 style="float: left;">
+            Date &nbsp;: &nbsp;{{ zzz.date | date: "short" }}
+        </h6> -->
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-body">
+                <ngx-doc-viewer [url]="wordUrl" viewer="google" style="width: 100%; height: 70vh;"></ngx-doc-viewer>
+                <br /><br />
+
+                <div class="col-lg-12 row">
+                    <div class="col-lg-5"></div>
+                    <div class="col-lg-6">
+                        <a [href]="pdfUrl"><button class="btn btn-info">
+<i class="fa fa-download"></i>Download
+</button>
+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
